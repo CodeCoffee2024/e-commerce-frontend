@@ -37,6 +37,10 @@ yarn-error.log
 testem.log
 /typings
 
+#ssh files
+e-commerce-frontend
+e-commerce-frontend.pub
+
 # System files
 .DS_Store
 Thumbs.db
