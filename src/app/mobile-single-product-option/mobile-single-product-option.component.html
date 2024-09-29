@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-4 col-md-2">
+        <img src="assets/product.jfif" width="100" height="100">
+    </div>
+    <div class="col-8 col-md-10 d-flex align-content-center">
+        <div>
+            <div class="font-lg font-weight-bold primary-highlight-text-color">P160.00</div>
+            <div><del class="font-md text-secondary">P160.00</del> &nbsp; <span class="font-md">-50%</span></div>
+            <div>Product Descripion</div>
+        </div>
+    </div>
+</div>
+<div class="row mt-3 primary-text-color">
+    <div class="col-12 font-weight-bold">
+        Options
+    </div>
+</div>
+<div class="row primary-text-color">
+    <div class="col-3 p-1 d-flex justify-content-center">
+        <img src="assets/product.jfif" width="50" height="50">
+    </div>
+    <div class="col-3 p-1 d-flex justify-content-center">
+        <img src="assets/product.jfif" width="50" height="50">
+    </div>
+    <div class="col-3 p-1 d-flex justify-content-center">
+        <img src="assets/product.jfif" width="50" height="50">
+    </div>
+    <div class="col-3 p-1 d-flex justify-content-center">
+        <img src="assets/product.jfif" width="50" height="50">
+    </div>
+    <div class="col-3 p-1 d-flex justify-content-center">
+        <img src="assets/product.jfif" width="50" height="50">
+    </div>
+    <div class="col-3 p-1 d-flex justify-content-center">
+        <img src="assets/product.jfif" width="50" height="50">
+    </div>
+    <div class="col-3 p-1 d-flex justify-content-center">
+        <img src="assets/product.jfif" width="50" height="50">
+    </div>
+    <div class="col-3 p-1 d-flex justify-content-center">
+        <img src="assets/product.jfif" width="50" height="50">
+    </div>
+</div>
+<div class="row mt-5 primary-text-color">
+    <div class="col-7 col-md-10 font-weight-bold d-flex align-items-center">
+        Quantity
+    </div>
+    <div class="col-5 col-md-2 d-flex">
+        <button class="btn btn-secondary" (click)="decrement()"> - </button>
+        <input type="number" [(ngModel)]="quantity" class="form-control ml-1 mr-1 w-70 text-center">
+        <button class="btn btn-secondary" (click)="increment()"> + </button>
+    </div>
+</div>
+
+<div class="row mt-5 primary-text-color">
+    <div class="col-6 d-flex align-items-center justify-content-center pr-1">
+        <button class="btn btn-success w-100 pt-3 pb-3 font-md" (click)="buyNow(product)">Buy Now</button>
+    </div>
+    <div class="col-6 d-flex align-items-center justify-content-center pl-1">
+        <button class="btn btn-success w-100 pt-3 pb-3 font-md" (click)="addToCart(product)">Add To Cart</button>
+    </div>
+</div>

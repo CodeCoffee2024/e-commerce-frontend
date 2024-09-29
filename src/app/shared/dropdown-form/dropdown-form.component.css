@@ -1,0 +1,17 @@
+/* Make the suggestion list float above the other elements */
+.list-group {
+    max-height: 200px; /* Limit the height of the dropdown */
+    overflow-y: auto;  /* Allow scrolling when items exceed max height */
+    z-index: 1000;     /* Ensure the dropdown is on top */
+    background-color: #fff; /* Ensure it's visible */
+    border: 1px solid #ddd; /* Add a border to the floating box */
+  }
+  
+  /* Make sure it looks like a dropdown */
+  .list-group-item {
+    cursor: pointer;
+  }
+  
+  .list-group-item:hover {
+    background-color: #f0f0f0;
+  }

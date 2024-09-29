@@ -1,0 +1,93 @@
+<div class="col-12">
+    <app-header></app-header>
+    <div class="row mt-3">
+        <div class="col-md-8 col-12">
+            <ngb-carousel *ngIf="images" [interval]="5000">
+                <ng-template ngbSlide *ngFor="let image of images; let i = index">
+                    <div class="w-100">
+                        <img [src]="image.url" alt="Image {{ i + 1 }}" width="100%">
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+        </div>
+        <div class="col-md-4 ml-0 d-none d-md-block">
+            <div class="row">
+                <div class="col-12 mb-1">
+                    <img src="assets/ad-1.jpg" width="100%">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <img src="assets/ad-2.jpg" width="100%">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 d-flex align-items-center">
+            <span><b class="font-md mr-2">Flash Sale</b></span>
+            <div class="countdown-time">
+                <div class="countdown-item">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">{{ hours }}</div>
+                        <div class="flip-card-back">{{ hours }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="countdown-item">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                        <div class="flip-card-front">{{ minutes }}</div>
+                        <div class="flip-card-back">{{ minutes }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="countdown-item">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">{{ seconds }}</div>
+                            <div class="flip-card-back">{{ seconds }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="isLoadingProducts">
+        <div class="spinner-border text-dark" role="status">
+        <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="!isLoadingProducts">
+        <div class="col-md-2 col-6 p-2 cursor-pointer" (click)="goToProduct(product)" *ngFor="let product of products">
+            <div>
+                <img [src]="dashboardService.publicUrl + product.productImgPath" width="100%" height="100%"> 
+            </div>
+            <div>
+                <span class="font-md">{{ product.productName }}</span>
+                <div class="font-md primary-highlight-text-color">{{product.price}}</div>
+                <!-- <div><del class="font-sm text-secondary">P160.00</del> &nbsp; <span class="font-sm">-50%</span></div> -->
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="isLoadingCategories">
+        <div class="spinner-border text-dark" role="status">
+        <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="!isLoadingCategories">
+        <div class="col-12">
+            <span class="font-md">Categories</span>
+        </div>
+    </div>
+    <div class="row mt-2 mb-4" *ngIf="!isLoadingCategories">
+        <div class="col-6 col-md-12-5" *ngFor="let category of categories">
+            <div>
+                <img [src]="dashboardService.publicUrl + category.imgPath" class="p-2" width="100%" height="100%">
+                <div class="d-flex justify-content-center font-md">{{category.description}}</div>
+            </div>
+        </div>
+    </div>
+</div>        
+<app-footer></app-footer>

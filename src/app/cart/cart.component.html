@@ -1,0 +1,121 @@
+
+
+<div class="col-12">
+    <app-header></app-header>
+    
+    <div class="row mt-3" *ngIf="merchants.length == 0 && !hasLoading">
+        <div class="col-12 ">
+            <div class="d-flex justify-content-center">
+                <img src="assets/no-cart-items.png" width="250" height="250">
+            </div>
+            <div class="d-flex justify-content-center">
+                <span class="font-md">You don't have any item in your cart</span>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="merchants.length > 0 && !hasLoading">
+        <div class="col-12 col-md-8 offset-md-2 offset-lg-0 d-flex justify-content-end d-flex align-items-center" >
+            <span (click)="deleteSelectedItems()">
+                <i class="fa fa-trash-o"></i>
+                <span>DELETE</span>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2 col-lg-7 offset-lg-1" *ngFor="let merchant of merchants">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-check align-items-center">
+                        <input type="checkbox" class="form-check-input form-checkbox-md" (change)="toggleItems(merchant)" [checked]="checkSelectedMerchantItems(merchant)">
+                        <label class="form-check-label d-flex align-items-center">
+                            <i class="fa fa-shopping-basket class ml-2"></i> <span class="font-md font-weight-bold">{{ merchant.name }}</span>
+                        </label>
+                    </div>
+                </div>
+                <!-- <div class="col-5  d-flex ">
+                </div> -->
+            </div>
+            <div class="row mt-2" *ngFor="let cartItem of merchantCartItems(merchant)">
+                <div class="col-1 pr-lg-0">
+                    <div class="form-check align-items-center">
+                        <input type="checkbox" class="form-check-input form-checkbox-md" [checked]="cartItem.isSelected"  (change)="toggleCartItem(cartItem)">
+                    </div>
+                </div>
+                <div class="col-3 pl-0 col-lg-2 pr-lg-0">
+                    <img class="ml-2" [src]="dashboardService.publicUrl + cartItem.product.productImgPath" width="70" height="70">
+                </div>
+                <div class="col-7 p-0 col-lg-9 pr-lg-3">
+                    <div class="row">
+                        <div class="col-12 pl-lg-0">
+                            <span>{{ cartItem.product.productName }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 pl-lg-0">
+                            <span class="font-md primary-highlight-text-color font-weight-bold">{{ cartItem.product.price | number: '1.2-2' }}</span>
+                        </div>
+                        <div class="col-4 pl-lg-0 d-flex justify-content-end">
+                            <button class="btn btn-secondary" (click)="decrement(cartItem.product)"> - </button>
+                            <input type="number" [(ngModel)]="cartItem.quantity" (change)="updateProductQuantity(cartItem)" class="form-control ml-1 mr-1 w-40 text-center">
+                            <button class="btn btn-secondary" (click)="increment(cartItem.product)"> + </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 d-lg-block d-none" *ngIf="merchants.length > 0">
+            <div>
+                <span>Location</span>
+            </div>
+            <div>
+                <span><i class="fa fa-map-marker mr-2 "></i>No Address Selected</span>
+            </div>
+            <div class="mt-3">
+                <span class="font-md">Order Summary</span>
+            </div>
+            <div class="row">
+                <div class="col-6">Subtotal ({{getSelectedItemsCount()}} items)</div>
+                <div class="col-6 d-flex justify-content-end">{{ calculateSelectedItems() | number: '1.2-2' }}</div>
+            </div>
+            <div class="row">
+                <div class="col-6">Shipping Fee</div>
+                <div class="col-6 d-flex justify-content-end">P100.00</div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-6">Subtotal</div>
+                <div class="col-6">
+                    <div class="font-md primary-highlight-text-color font-weight-bold d-flex justify-content-end">{{calculateSubtotal() | number : '1.2-2'}}</div>
+                    <div class=" d-flex justify-content-end">
+                        <small class="text-right">VAT included, where applicable</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <button class="btn btn-success w-100" (click)="goToCheckout()">
+                        Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row sticky-buy-options p-2 d-flex d-lg-none" *ngIf="merchants.length > 0">
+    <div class="col-2 col-md-1">
+        
+        <div class="form-check align-items-center">
+            <input type="checkbox" class="form-check-input form-checkbox-md" (change)="toggleAll($event)" [checked]="isAllToggled()">
+            <label class="form-check-label d-flex align-items-center ml-2">
+                All
+            </label>
+        </div>
+    </div>
+    <div class="col-6 col-md-7">
+        Subtotal: 
+        <span class="font-md primary-highlight-text-color font-weight-bold">{{ calculateSelectedItems() | number: '1.2-2' }}</span>
+    </div>
+    <div class="col-4 pl-0 pr-md-3 d-flex justify-content-end">
+        <button class="btn btn-success w-100 h-100 pt-1 pb-1 m-0 font-md mr-md-2" (click)="goToCheckout()">Checkout</button>
+    </div>
+</div>
+<app-footer></app-footer>

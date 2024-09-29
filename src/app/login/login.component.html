@@ -1,0 +1,108 @@
+<div class="bg-white rounded">
+    <div class="modal-body">
+        <div class="container ">
+            <div class="row">
+                <div class="col-6 cursor-pointer p-0 mt-2" (click)="toggleLogIn()">
+                    <div class=" d-flex justify-content-center">LOGIN</div>
+                    <div class=" d-flex justify-content-center pt-1 bg-primary-highlight-color" *ngIf="isLogInSelected"></div>
+                </div>
+                <div class="col-6 cursor-pointer p-0 mt-2" (click)="toggleSignUp()">
+                    <div class=" d-flex justify-content-center">SIGN UP</div>
+                    <div class=" d-flex justify-content-center pt-1 bg-primary-highlight-color" *ngIf="isSignUpSelected"></div>
+                </div>
+            </div>
+            <ng-container *ngIf="isLogInSelected">
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="email" class="font-md">Email address</label>
+                            <input type="email" [class]="loginForm.errors?.email ? 'border-danger': ''" class="form-control form-control-lg" [(ngModel)]="loginForm.email" placeholder="Enter email">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="password" class="font-md">Password</label>
+                            <input type="password" [class]="loginForm.errors?.password ? 'border-danger': ''" class="form-control form-control-lg" [(ngModel)]="loginForm.password" placeholder="Enter password">
+                            <div *ngIf="loginForm.errors?.password" class="text-danger">
+                                {{ loginForm.errors?.password }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button class="bg-primary-highlight-color btn btn-lg w-100 text-white" (click)="logInDefault()">Login</button>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 d-flex justify-content-center">
+                        <span class="font-md">Or login with</span>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 d-flex justify-content-center">
+                        <button class="btn bg-primary-highlight-color btn-lg text-white w-100" (click)="logInViaGoogle()">
+                            <i class="fa fa-google"></i>
+                            Login with Google
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="isSignUpSelected">
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="email" class="font-md">Email address</label>
+                            <input type="email" [class]="signupForm.errors?.email ? 'border-danger': ''" class="form-control form-control-lg" [(ngModel)]="signupForm.email" placeholder="Enter email">
+                            <div *ngIf="signupForm.errors?.email" class="text-danger">
+                                {{ signupForm.errors?.email }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="password" class="font-md">Password</label>
+                            <input type="password" [class]="signupForm.errors?.password ? 'border-danger': ''" class="form-control form-control-lg" [(ngModel)]="signupForm.password" placeholder="Enter password">
+                            <div *ngIf="signupForm.errors?.password" class="text-danger">
+                                {{ signupForm.errors?.password }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="repeatPassword" class="font-md">Repeat Password</label>
+                            <input type="password" [class]="signupForm.errors?.repeatPassword ? 'border-danger': ''" class="form-control form-control-lg" [(ngModel)]="signupForm.repeatPassword" placeholder="Enter password">
+                            <div *ngIf="signupForm.errors?.repeatPassword" class="text-danger">
+                                {{ signupForm.errors?.repeatPassword }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button class="bg-primary-highlight-color btn btn-lg w-100 text-white" (click)="signUp()">Signup</button>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 d-flex justify-content-center">
+                        <span class="font-md">Or signup with</span>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 d-flex justify-content-center">
+                        <button class="btn bg-primary-highlight-color btn-lg text-white w-100" (click)="signUpViaGoogle()">
+                            <i class="fa fa-google"></i>
+                            Signup with Google
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

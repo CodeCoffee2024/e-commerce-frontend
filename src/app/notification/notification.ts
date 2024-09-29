@@ -1,0 +1,11 @@
+export enum NotificationType {
+    SUCCESS,
+    ERROR,
+    WARNING,
+    ADDTOCART,
+    NOITEMSELECTED,
+    REMOVEFROMCART,
+    AUTHERROR,
+    SUCCESSLOGIN,
+    ADDADDRESS
+}

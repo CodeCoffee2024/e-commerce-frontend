@@ -1,0 +1,176 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-text-color: #1a1a1a;
+    --primary-highlight-color: #ed8a11;
+}
+html {
+    background-color: #f5f5f5;
+}
+* {
+    font-size: 12px;
+}
+.font-lg {
+    font-size: 25px !important;
+}
+.font-md {
+    font-size: 15px !important;
+}
+.font-sm {
+    font-size: 12px !important;
+}
+.w-100p {
+    width: 100%;
+}
+.primary-text-color {
+    color: var(--primary-text-color);
+}
+.primary-highlight-text-color {
+    color: var(--primary-highlight-color);
+}
+.bg-primary-highlight-color{
+    background-color: var(--primary-highlight-color);
+}
+a {
+    text-decoration: none;
+}
+.border-xs {
+    border: 1px solid black;
+}
+ul li {
+    text-decoration: none;
+    list-style-type: none;
+}
+.modal-backdrop {
+    z-index: 1 !important;
+}
+.font-xs {
+    font-size: 10px;
+}
+.font-xl {
+    font-size: 30px;
+}
+.font-xxl {
+    font-size: 50px;
+}
+.font-xxxl {
+    font-size: 70px;
+}
+.visually-hidden {
+    display: none;
+}/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+a:hover {
+    color: var(--primary-highlight-color);
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.form-checkbox-md {
+    width: 17px;
+    height: 17px;
+}
+.w-40 {
+    min-width: 40px;
+}
+.w-50 {
+    min-width: 50px;
+}
+.w-60 {
+    min-width: 60px;
+}
+.w-70 {
+    min-width: 70px;
+}
+.w-80 {
+    min-width: 80px;
+}
+.w-max-600 {
+    max-width: 600px;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 25px;
+    float: right;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 4px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 17px;
+    width: 17px;
+    top: 2px;
+    right: 20px;
+    background-color: white;
+    transition: .4s;
+}
+.slider-off.slider:before {
+    left: 3px;
+}
+.slider-on.slider:before {
+    left: -5px;
+}
+input.default:checked + .slider {
+  background-color: var(--primary-highlight-color)
+}
+input.primary:checked + .slider {
+  background-color: #2196F3;
+}
+input.success:checked + .slider {
+  background-color: #8bc34a;
+}
+input.info:checked + .slider {
+  background-color: #3de0f5;
+}
+input.warning:checked + .slider {
+  background-color: #FFC107;
+}
+input.danger:checked + .slider {
+  background-color: #f44336;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}

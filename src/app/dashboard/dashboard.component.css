@@ -1,0 +1,77 @@
+
+
+  .countdown-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f3f4f6;
+  }
+  
+  .countdown-time {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .countdown-item {
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .flip-card {
+    position: relative;    
+    width: 30px;
+    height: 30px;
+    perspective: 1000px;
+  }
+  
+  .flip-card-inner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #333;
+    background: #fff;
+    border: 1px solid #ccc;
+  }
+  
+  .flip-card-front {
+    background: #fff;
+  }
+  
+  .flip-card-back {
+    background: #fff;
+    transform: rotateX(180deg);
+  }
+  
+  /* Flip animation */
+  .flip-card.flip .flip-card-inner {
+    transform: rotateX(180deg);
+  }
+  
+  .countdown-label {
+    display: block;
+    font-size: 14px;
+    color: #666;
+  }
+  .mr-2 {
+    margin-right: 5px;
+  }
+  @media only screen and (min-width: 768px) {
+    .col-md-12-5 {
+      flex: 0 0 auto;
+      width: 12.5%;
+    }
+  }

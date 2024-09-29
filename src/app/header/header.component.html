@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-5 col-md-6">
+        <ul class="nav">
+            <li class="nav-item primary-text-color d-flex align-items-center">
+                <span class="d-block d-md-none">Logo</span> <span class="d-none d-md-block">Follow us on</span> <a class="nav-link mr-2 primary-text-color" href="#"><i class="fa fa-facebook mr-1"></i> | <i class="fa fa-instagram"></i> <i class="fa fa-tiktok"></i></a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-7 col-md-6 d-flex justify-content-end">
+        <ul class="nav">
+            <li class="nav-item primary-text-color d-flex align-items-center mx-2" >
+                <ng-container *ngIf="!displayName">
+                  <span (click)="logIn()">Login | Signup</span>
+                </ng-container>
+                <ng-container *ngIf="displayName">
+                  <div class="dropdown">
+                    <a
+                      class="nav-link dropdown-toggle primary-text-color p-0"
+                      href="#"
+                      role="button"
+                      id="userDropdown"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      {{ displayName }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                      <a class="dropdown-item" (click)="logout()">Logout</a>
+                    </div>
+                  </div>
+                </ng-container>
+            </li>
+            <li class="nav-item primary-text-color d-flex align-items-center">
+                <select class="form-control-sm">
+                    <option>USD</option>
+                    <option>PHP</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-lg-2 d-md-block d-none">
+        <span class="font-lg">LOGO HERE</span>
+    </div>
+    <div class="col-10 col-lg-8 col-md-7">
+        <div class="search-container">
+            <input class="form-control-lg border-xs w-100p p-2 font-sm" placeholder="Search anything">
+            <button id="searchBtn"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+    <div class="col-2 pl-0 d-flex align-items-center cursor-pointer" (click)="goToCart()">
+        <div class="">
+            <a>
+                <i class="fa fa-shopping-cart font-lg"></i> 
+            </a>
+        </div>
+        <span class="rounded-circle text-center position-absolute bg-secondary text-white cart-item-count">{{ totalItems }}</span>
+    </div>
+</div>

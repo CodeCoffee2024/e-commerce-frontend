@@ -1,0 +1,18 @@
+<div class="modal-dialog modal-dialog-centered bg-white modal-md w-max-600">
+    <div class="modal-content m-auto">
+        <div class="modal-header" *ngIf="data?.header">
+        <h4 class="modal-title">{{ data?.header }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body d-inline-block justify-content-center font-lg">
+            <div class=" d-flex justify-content-center">
+                <span><i class="fa font-xxl" [class]="getIcon(data.type)"></i></span>
+            </div>
+            <div class=" d-flex justify-content-center">
+                <span class=" font-md">{{ data.message }}</span>
+            </div>
+        </div>
+    </div>
+</div>

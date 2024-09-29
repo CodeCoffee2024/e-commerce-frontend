@@ -1,0 +1,198 @@
+<div class="col-12" *ngIf="product">
+    <app-header></app-header>
+    <div class="row product-specs">
+        <div class="col-12 col-md-8 offset-md-2 offset-lg-0 col-lg-4 mb-4 d-flex justify-content-center">
+            <img class="mt-4 product-img" src="assets/product.jfif">
+        </div>
+        <div class="col-12 col-lg-4 mt-2">
+            <div class="row d-flex align-items-center justify-content-between ">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 font-lg primary-highlight-text-color font-weight-bolder order-1 order-lg-2">
+                            {{ product.price }}
+                        </div>
+                        <div class="col-12 order-2 order-lg-1">
+                            <span class="product-name">{{ product.productName }}</span>
+                        </div>
+                        <div class="col-12 order-3">
+                            <span class="font-sm">
+                                <i class="fa fa-star primary-highlight-text-color"></i>
+                                <i class="fa fa-star primary-highlight-text-color"></i>
+                                <i class="fa fa-star primary-highlight-text-color"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end align-items-center">
+                    <span class="font-md primary-text-color p-2">
+                        <i class="fa fa-heart-o"></i>
+                    </span>
+                    <span class="font-md primary-text-color p-2">
+                        <i class="fa fa-share-alt"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="row" (click)="toggleProductOptions()">
+                <div class="col-12 mb-1 font-sm text-muted">
+                    Product Options
+                </div>
+            </div>
+            <div class="row mb-4" (click)="toggleProductOptions()">
+                <div class="col-12 mb-4 font-sm text-muted">
+                    <img [src]="dashboardService.publicUrl + product.productImgPath" class="mr-2" width="50" height="50">
+                    <img [src]="dashboardService.publicUrl + product.productImgPath" width="50" height="50">
+                </div>
+            </div>
+            <div class="row d-block d-lg-none">
+                <div class="col-12 mb-1 font-sm text-muted" (click)="toggleProductSpecifications()">
+                    Product Specifications
+                </div>
+            </div>
+            <div class="row mt-5 primary-text-color d-none d-lg-flex">
+                <div class="col-7 font-weight-bold d-flex align-items-center">
+                    Quantity
+                </div>
+                <div class="col-5 d-flex">
+                    <button class="btn btn-secondary" (click)="decrement()"> - </button>
+                    <input type="number" [(ngModel)]="quantity" class="form-control ml-1 mr-1 w-70 text-center">
+                    <button class="btn btn-secondary" (click)="increment()"> + </button>
+                </div>
+            </div>
+
+            <div class="row mt-5 primary-text-color d-none d-lg-flex">
+                <div class="col-6 d-flex align-items-center justify-content-center pr-1">
+                    <button class="btn btn-success w-100 pt-3 pb-3 font-md" (click)="buyNow(product)">Buy Now</button>
+                </div>
+                <div class="col-6 d-flex align-items-center justify-content-center pl-1">
+                    <button class="btn btn-success w-100 pt-3 pb-3 font-md" (click)="addToCart(product)">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-4 col-lg-4">
+            <div class="row">
+                <div class="col-12 mb-1 font-sm text-muted">
+                    Shipping & Delivery
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-10 mb-1 font-md">
+                    <i class="fa fa-map-pin mr-2"></i>Batangas<br>
+                    <span class="">Origin</span>
+                </div>
+            </div>
+            <div class="row d-none d-lg-inline-block">
+                <div class="col-10 mb-1 font-md">
+                    <i class="fa fa-map-marker"></i> Metro Manila<br>
+                    <span class="">Estimated Delivery Cost (P48.00)</span>
+                </div>
+                <div class="col-2 mb-1 font-md">
+                    Change
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 mb-1 font-sm text-muted">
+                    Return & Refund
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1 mb-1 font-md">
+                    <i class="fa mr-2 fa-truck"></i> 
+                </div>
+                <div class="col pl-0 font-md">
+                    1 Week Free Return
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1 mb-1 font-md">
+                    <i class="fa fa-shield text-danger"></i>
+                </div>
+                <div class="col pl-0 font-md">
+                    No Warranty
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row d-none d-lg-block">
+        <div class="col-12 product-specs">
+            <div class="row primary-text-color">
+                <div class="col-12 font-md">
+                    Brand
+                </div>
+            </div>
+            <div class="row primary-text-color">
+                <div class="col-12 font-sm pl-5">
+                    <i class="fa fa-circle font-xs"></i> Brand
+                </div>
+            </div>
+            <div class="row mt-3 primary-text-color">
+                <div class="col-12 font-md">
+                    Condition
+                </div>
+            </div>
+            <div class="row primary-text-color">
+                <div class="col-12 font-sm pl-5">
+                    <i class="fa fa-circle font-xs"></i> New
+                </div>
+            </div>
+            <div class="row mt-3 primary-text-color">
+                <div class="col-12 font-md">
+                    Condition
+                </div>
+            </div>
+            <div class="row primary-text-color">
+                <div class="col-12 font-sm pl-5">
+                    <i class="fa fa-circle font-xs"></i> New
+                </div>
+            </div>
+            <div class="row mt-3 primary-text-color">
+                <div class="col-12 font-md">
+                    Condition
+                </div>
+            </div>
+            <div class="row primary-text-color">
+                <div class="col-12 font-sm pl-5">
+                    <i class="fa fa-circle font-xs"></i> New
+                </div>
+            </div>
+            <div class="row mt-3 primary-text-color">
+                <div class="col-12 font-md">
+                    Condition
+                </div>
+            </div>
+            <div class="row primary-text-color">
+                <div class="col-12 font-sm pl-5">
+                    <i class="fa fa-circle font-xs"></i> New
+                </div>
+            </div>
+            <div class="row mt-3 primary-text-color">
+                <div class="col-12 font-md">
+                    Condition
+                </div>
+            </div>
+            <div class="row primary-text-color">
+                <div class="col-12 font-sm pl-5">
+                    <i class="fa fa-circle font-xs"></i> New
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row sticky-buy-options p-2 d-flex d-lg-none">
+    <div class="col-1 col-md-1">
+        <button class="btn"> <i class="fa primary-highlight-text-color h-100 p-md-3 font-md fa-shopping-basket"></i></button>
+    </div>
+    <div class="col-2 col-md-1">
+        <button class="btn bg-primary-highlight-color text-white p-2 p-md-3 w-100 h-100"> <i class=" font-md fa fa-bookmark-o"></i></button>
+    </div>
+    <div class="col-4 col-md-5 pl-0 pr-1">
+        <button class="btn btn-success w-100 h-100 pt-1 pb-1 font-md m-0" (click)="buyNow(product)">Buy Now</button>
+    </div>
+    <div class="col-4 col-md-5 pl-0 pr-0 pr-md-3">
+        <button class="btn btn-success w-100 h-100 pt-1 pb-1 m-0 font-md mr-md-2" (click)="addToCart(product)">Add To Cart</button>
+    </div>
+</div>
+<app-footer></app-footer>
