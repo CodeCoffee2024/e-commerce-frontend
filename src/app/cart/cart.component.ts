@@ -1,20 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Cart } from '../models/cart';
 import { CartService } from './cart.service';
 import { Merchant } from '../models/merchant';
 import { Product } from '../models/product';
 import { DashboardService } from '../dashboard/dashboard.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../notification/notification.service';
-import { NotificationType } from '../notification/notification';
+import { NotificationType } from '../models/notification';
 import { LoadingService } from '../shared/loading.service';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
   carts: Cart[];
   quantity: Number = 0;
   totalCartItems = 0;
@@ -23,8 +24,16 @@ export class CartComponent {
     public dashboardService: DashboardService,
     private router: Router,
     private notificationService: NotificationService,
+    private authService: AuthService,
     private loadingService: LoadingService
-  ) {
+  ){}
+  ngOnInit(): void {
+    this.loadingService.show();
+    if (!this.authService.verifyAuth()) {
+      this.loadingService.hide();
+      this.router.navigate(['403']);
+      return;
+    }
   }
 
   get merchants() {
@@ -113,6 +122,7 @@ export class CartComponent {
         timer: 3000})
         return;
     }
+    localStorage.removeItem('selectedAddress');
     this.router.navigate(['checkout']);
   }
 }

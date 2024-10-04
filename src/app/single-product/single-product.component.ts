@@ -10,7 +10,7 @@ import { SingleProductService } from './single-product.service';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { Mapper } from '../shared/mapper';
 import { NotificationService } from '../notification/notification.service';
-import { NotificationType } from '../notification/notification';
+import { NotificationType } from '../models/notification';
 import { AuthService } from '../shared/auth.service';
 import { MobileLoginComponent } from '../mobile-login/mobile-login.component';
 import { LoginComponent } from '../login/login.component';
@@ -24,6 +24,7 @@ import { LoadingService } from '../shared/loading.service';
 export class SingleProductComponent implements OnInit{
   product: Product;
   quantity = 1;
+  id : Number;
   constructor(private modalService: NgbModal,
     private cartService: CartService,
     private route: ActivatedRoute,
@@ -35,9 +36,9 @@ export class SingleProductComponent implements OnInit{
     private loadingService: LoadingService
   ) {}
   ngOnInit(): void {
-    let id = Number(this.route.snapshot.paramMap.get('id'));
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadingService.show();
-    this.singleProductService.getProduct(id).subscribe(product => {
+    this.singleProductService.getProduct(this.id, JSON.parse(localStorage.getItem('currentCityMunicipality')).id).subscribe(product => {
       let productMapper = new Mapper<Product, Product>((product: Product): Product => {
         return product;
       })
@@ -166,5 +167,12 @@ export class SingleProductComponent implements OnInit{
         targetComponent: MobileSingleProductOptionComponent
       };
     }
+  }
+  get isDesktop() {
+    return window.innerWidth > 768;
+  }
+  changeAddress() {
+    localStorage.setItem('lastLocation', '/product/'+ this.id);
+    this.router.navigate(['select-address-mobile']);
   }
 }

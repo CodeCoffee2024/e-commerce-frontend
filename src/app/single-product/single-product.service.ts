@@ -5,8 +5,8 @@ import { ApiService } from '../api.service';
   providedIn: 'root'
 })
 export class SingleProductService extends ApiService {
-  getProduct(id: Number) {
-    let request = this.getRequest('product/'+id);
+  getProduct(id: Number, location = null) {
+    let request = this.getRequest('product/'+id+'/'+location);
     return request;
   }
 }

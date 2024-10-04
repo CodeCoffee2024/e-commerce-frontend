@@ -1,0 +1,27 @@
+<div class="modal-dialog modal-dialog-centered bg-white modal-md w-max-600">
+    <div class="modal-content m-auto">
+        <div class="modal-header">
+            <h4 class="modal-title">Confirmation</h4>
+        </div>
+        <div class="modal-body d-inline-block justify-content-center font-lg">
+            <div class=" d-flex justify-content-center">
+                <span class=" font-md">{{ data.message }}</span>
+            </div>
+        </div>
+        <div class="modal-footer justify-content-center font-lg">
+            <div class="container">
+                <div class="row">
+                    <div [ngClass]="DialogType.YESNOMAYBE != data.type ? 'col-6' : 'col-4'">
+                        <button class="btn btn-success" (click)="DialogType.OKCANCEL == data.type ? respond(ResponseType.OK) : respond(ResponseType.YES)">{{ firstButtonText }}</button>
+                    </div>
+                    <div class="col-4" *ngIf="DialogType.YESNOMAYBE == data.type">
+                        <button class="btn btn-warning" (click)="respond(ResponseType.MAYBE)">{{ middleButtonText }}</button>
+                    </div>
+                    <div [ngClass]="DialogType.YESNOMAYBE != data.type ? 'col-6' : 'col-4'">
+                        <button class="btn btn-danger" (click)="DialogType.OKCANCEL == data.type ? respond(ResponseType.CANCEL) : respond(ResponseType.NO)">{{ lastButtonText }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

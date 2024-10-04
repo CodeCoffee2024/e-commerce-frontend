@@ -21,13 +21,12 @@ export class HeaderComponent implements OnInit {
     private route: Router,
     private authService: AuthService,
     private modalService: NgbModal,
+    private router: Router,
     private loadingService: LoadingService
   ){
   }
   async ngOnInit() {
-    this.loadingService.show();
     await this.cartService.getCart().then(as=>{
-      this.loadingService.hide();
     });
     this.cartService.cartItems$.subscribe(() => {
       this.totalItems = this.cartService.getTotalCountItems() > 99 ? "99+" : this.cartService.getTotalCountItems().toString();

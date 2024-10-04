@@ -10,14 +10,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../notification/notification.service';
 import { NotificationType } from '../models/notification';
 import { LoadingService } from '../shared/loading.service';
-import { AuthService } from '../shared/auth.service';
 
 @Component({
-  selector: 'app-add-shipping-address',
-  templateUrl: './add-shipping-address.component.html',
-  styleUrls: ['./add-shipping-address.component.css']
+  selector: 'app-update-shipping-address',
+  templateUrl: './update-shipping-address.component.html',
+  styleUrls: ['./update-shipping-address.component.css']
 })
-export class AddShippingAddressComponent implements OnInit{
+export class UpdateShippingAddressComponent implements OnInit{
   addressForm: AddressDTO = new AddressDTO();
   regionSearch: string = '';
   regions: RegionDTO[] = [];
@@ -33,22 +32,30 @@ export class AddShippingAddressComponent implements OnInit{
     private addressService: AddressService,
     private errorHandlerService: ErrorHandlerService,
     private router: Router,
+    private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private authService: AuthService,
-    private loadingService: LoadingService,
-    private route: ActivatedRoute
+    private loadingService: LoadingService
   ){}
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.isSelectAddress = params['selectAddress'] === 'true'; // Convert to boolean if necessary
     });
     this.loadingService.show();
-    if (!this.authService.verifyAuth()) {
+    let id = Number(this.route.snapshot.paramMap.get('id'));
+    if (!id) {
       this.loadingService.hide();
-      this.router.navigate(['403']);
-      return;
+      this.router.navigate(['404']);
     } else {
-      this.loadingService.hide();
+      let params = {id: id};
+      this.addressService.getAddress(params).subscribe({
+        next: (address:any) => {
+          this.addressForm = this.addressForm.addressMapper(address?.data);
+          console.log(this.addressForm);
+        },
+        complete: () => {
+          this.loadingService.hide();
+        }
+      })
     }
   }
   onRegionChanged(item) {
@@ -125,12 +132,12 @@ export class AddShippingAddressComponent implements OnInit{
       }
     });
   }
-  addShippingAddress() {
+  updateShippingAddress() {
     this.addressService.createOrUpdate(this.addressForm).subscribe({
       next: (it:any) => {
         this.notificationService.openModal({
           type: NotificationType.ADDADDRESS,
-          message: "Address successfully added",
+          message: "Address successfully updated",
           header: null,
           timer: 3000})
         this.router.navigate(['manage-addresses'], { queryParams: { selectAddress: this.isSelectAddress }});

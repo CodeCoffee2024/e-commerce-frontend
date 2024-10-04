@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../shared/auth.service';
 import { NotificationService } from '../notification/notification.service';
-import { NotificationType } from '../notification/notification';
+import { NotificationType } from '../models/notification';
 import { User } from '../models/user';
 import { Mapper } from '../shared/mapper';
 import { UserGoogle } from '../models/userGoogle';

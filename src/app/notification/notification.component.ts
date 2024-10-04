@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NotificationType } from './notification';
+import { NotificationType } from '../models/notification';
 
 @Component({
   selector: 'app-notification',
@@ -29,6 +29,9 @@ export class NotificationComponent implements OnInit {
         return 'fa-user-o text-success'
       break;
       case NotificationType.ADDADDRESS:
+        return 'fa-map text-success'
+      break;
+      case NotificationType.REMOVEADDRESS:
         return 'fa-map text-success'
       break;
       default:

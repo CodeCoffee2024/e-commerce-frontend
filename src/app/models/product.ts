@@ -1,5 +1,7 @@
 import { Category } from "./category";
+import { CityMunicipalityDTO } from "./cityMunicipality";
 import { Merchant } from "./merchant";
+import { MerchantAddressDTO } from "./merchantAddress";
 
 export interface Product {
     id: number;
@@ -11,4 +13,7 @@ export interface Product {
     price: number;
     quantity: number;
     productImgPath: string;
+    pickupAddress: MerchantAddressDTO;
+    shippingFee: number;
+    currentCityMunicipality: CityMunicipalityDTO;
 }

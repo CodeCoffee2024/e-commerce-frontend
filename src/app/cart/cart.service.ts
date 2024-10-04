@@ -155,7 +155,6 @@ export class CartService extends ApiService {
   async getCart(): Promise<any> {
     this.setAuthentication(localStorage.getItem('token'));
     this.isLoading = true;
-    console.log("SD");
     return this.getRequest('cart').subscribe({
       next: (updatedCart)=> {
         const cartItems = JSON.parse(updatedCart as string);
@@ -171,7 +170,6 @@ export class CartService extends ApiService {
     return this.isLoading;
   }
   loadCart(data) {
-    console.log(data);
     if(data?.user?.cart) {
       const cartItems = JSON.parse(data.user.cart.content as string);
       this.cartItemsSubject.next(cartItems as Cart[]);

@@ -7,5 +7,6 @@ export enum NotificationType {
     REMOVEFROMCART,
     AUTHERROR,
     SUCCESSLOGIN,
-    ADDADDRESS
+    ADDADDRESS,
+    REMOVEADDRESS
 }

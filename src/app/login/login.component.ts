@@ -3,7 +3,7 @@ import { AuthService } from '../shared/auth.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CartService } from '../cart/cart.service';
 import { NotificationService } from '../notification/notification.service';
-import { NotificationType } from '../notification/notification';
+import { NotificationType } from '../models/notification';
 import { Login, LoginDTO } from '../models/login';
 import { Signup, SignupDTO } from '../models/signup';
 import { ErrorHandlerService } from '../shared/error-handler.service';

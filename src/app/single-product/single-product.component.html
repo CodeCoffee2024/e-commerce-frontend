@@ -79,17 +79,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-10 mb-1 font-md">
-                    <i class="fa fa-map-pin mr-2"></i>Batangas<br>
-                    <span class="">Origin</span>
+                <div class="col-10 mb-1" (click)="isDesktop ? '' : changeAddress()">
+                    <i class="fa fa-map-marker font-md mr-2" [ngClass]="!isDesktop ? 'primary-highlight-text-color' : ''"></i>
+                    <span class="font-md mr-2" [ngClass]="!isDesktop ? 'primary-highlight-text-color' : ''"> {{product.currentCityMunicipality.description}}</span>
+                    <i class="fa fa-location-arrow d-lg-none font-md"[ngClass]="!isDesktop ? 'primary-highlight-text-color' : ''"></i><br>
+                    <span class="">Estimated Delivery Cost ({{ product.shippingFee | number: '1.2-2' }})</span>
                 </div>
-            </div>
-            <div class="row d-none d-lg-inline-block">
-                <div class="col-10 mb-1 font-md">
-                    <i class="fa fa-map-marker"></i> Metro Manila<br>
-                    <span class="">Estimated Delivery Cost (P48.00)</span>
-                </div>
-                <div class="col-2 mb-1 font-md">
+                <div class="col-2 mb-1 font-md d-none d-lg-flex">
                     Change
                 </div>
             </div>

@@ -28,6 +28,11 @@ import { ShippingAddressComponent } from './shipping-address/shipping-address.co
 import { MobileShippingAddressComponent } from './mobile-shipping-address/mobile-shipping-address.component';
 import { AddShippingAddressComponent } from './add-shipping-address/add-shipping-address.component';
 import { DropdownFormComponent } from './shared/dropdown-form/dropdown-form.component';
+import { UpdateShippingAddressComponent } from './update-shipping-address/update-shipping-address.component';
+import { Page404Component } from './page404/page404.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { Page403Component } from './page403/page403.component';
+import { MobileSelectAddressComponent } from './mobile-select-address/mobile-select-address.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +55,12 @@ import { DropdownFormComponent } from './shared/dropdown-form/dropdown-form.comp
     ShippingAddressComponent,
     MobileShippingAddressComponent,
     AddShippingAddressComponent,
-    DropdownFormComponent
+    DropdownFormComponent,
+    UpdateShippingAddressComponent,
+    Page404Component,
+    ConfirmationDialogComponent,
+    Page403Component,
+    MobileSelectAddressComponent
   ],
   imports: [
     BrowserModule,

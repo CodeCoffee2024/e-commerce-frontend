@@ -1,0 +1,55 @@
+
+
+<div class="col-12">
+    <app-header></app-header>
+    <div class="container">
+        <div class="row mt-2">
+            <div class="col-12 p-0 font-md" *ngIf="!region.id">
+                Select Region
+            </div>
+            <div class="col-12 p-0 font-md" *ngIf="region.id">
+                <div class="d-flex">
+                    <ng-container *ngIf="region.id">
+                        <span class="mr-2">{{ region.description }}</span>
+                        <span><i class="fa primary-highlight-text-color fa-chevron-right mr-2"></i></span>
+                        <span class="mr-2" *ngIf="region.id && !province.id && !cityMunicipality.id">
+                            Select Province
+                        </span>
+                    </ng-container>
+                    <ng-container *ngIf="region.id && province.id">
+                        <span class="mr-2">{{ province.description }}</span>
+                        <span><i class="fa primary-highlight-text-color fa-chevron-right mr-2"></i></span>
+                        <span class="mr-2"  *ngIf="region.id && province.id && !cityMunicipality.id">
+                            Select City/Municipality
+                        </span>
+                    </ng-container>
+                    <ng-container *ngIf="region.id && province.id && cityMunicipality.id">
+                        <span class="mr-2">{{ cityMunicipality.description }}</span>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="!region.id && !province.id && !cityMunicipality.id">
+            <div class="row" *ngFor="let region of regions" (click)="selectRegion(region)">
+                <div class="col-12 p-2 border border-dark">
+                    {{ region.description }}
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="region.id && !province.id && !cityMunicipality.id">
+            <div class="row" *ngFor="let province of provinces" (click)="selectProvince(province)">
+                <div class="col-12 p-2 border border-dark">
+                    {{ province.description }}
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="region.id && province.id && !cityMunicipality.id">
+            <div class="row" *ngFor="let cityMunicipality of cityMunicipalities" (click)="selectCityMunicipality(cityMunicipality)">
+                <div class="col-12 p-2 border border-dark">
+                    {{ cityMunicipality.description }}
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<app-footer></app-footer>
