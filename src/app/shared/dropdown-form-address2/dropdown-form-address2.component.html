@@ -1,0 +1,64 @@
+<div class="dropdown address" *ngIf="load">
+    <!-- Label for the input -->
+    <div class="col-12 p-0 address" *ngIf="region.id">
+        <div class="d-flex address">
+            <ng-container *ngIf="region.id">
+                <span class="mr-2 primary-highlight-text-color address cursor-pointer" (click)="clearRegion()">{{ region.description }}</span>
+                <span class="address"><i class="fa primary-highlight-text-color fa-chevron-right mr-2 address"></i></span>
+                <span class="mr-2 address" *ngIf="region.id && !province.id && !cityMunicipality.id">
+                    Select Province
+                </span>
+            </ng-container>
+            <ng-container *ngIf="region.id && province.id">
+                <span class="mr-2 primary-highlight-text-color address cursor-pointer" (click)="selectProvince(province)">{{ province.description }}</span>
+                <span class="address"><i class="fa primary-highlight-text-color fa-chevron-right mr-2 address"></i></span>
+                <span class="mr-2 address"  *ngIf="region.id && province.id && !cityMunicipality.id">
+                    Select City/Municipality
+                </span>
+            </ng-container>
+            <ng-container *ngIf="region.id && province.id && cityMunicipality.id">
+                <span class="mr-2 address">{{ cityMunicipality.description }}</span>
+            </ng-container>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mt-3 address">
+            <div class="col-12 address p-0">
+                <input type="text" class="form-control address" placeholder="Enter {{ label }}" [(ngModel)]="searchText" (ngModelChange)="onSearchTextChanged()">
+            </div>
+        </div>
+    </div>
+    <div class="d-flex w-100 align-items-center justify-content-center loading-logo address max-height" *ngIf="isLoading">    
+        <img [src]="dashboardService.publicUrl+'uploads/logo.png'" alt="Logo here" class="loading-logo-img address" width="50" height="50"/>
+        <div class="spinner address"></div>
+    </div>
+    <div class="container address hide-scrollbar" [ngClass]="region.id ? 'float-max':'float'">
+        <ng-container *ngIf="!isLoading">
+            <div class="row mt-2 address">
+                <div class="col-12 p-0 address">
+                    Enter {{ label }}
+                </div>
+            </div>
+            <ng-container *ngIf="!region.id && !province.id && !cityMunicipality.id">
+                <div class="row address cursor-pointer" *ngFor="let region of regions" (click)="selectRegion(region)">
+                    <div class="col-12 p-2 border border-dark address">
+                        {{ region.description }}
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="region.id && !province.id && !cityMunicipality.id">
+                <div class="row address cursor-pointer" *ngFor="let province of provinces" (click)="selectProvince(province)">
+                    <div class="col-12 p-2 border border-dark address">
+                        {{ province.description }}
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="region.id && province.id && !cityMunicipality.id">
+                <div class="row address cursor-pointer" *ngFor="let cityMunicipality of cityMunicipalities" (click)="selectCityMunicipality(cityMunicipality)">
+                    <div class="col-12 p-2 border border-dark address">
+                        {{ cityMunicipality.description }}
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>

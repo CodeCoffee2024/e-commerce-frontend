@@ -7,103 +7,148 @@
             <button class="btn bg-primary-highlight-color w-100 text-white" (click)="goToShippingAddresses()"><i class="fa fa-map-marker"></i> Manage Shipping Address</button>
         </div>
     </div>
-    <div class="row mb-2  p-3" *ngIf="defaultAddress?.barangay">
-        <div class="col-12 pt-2 pb-2 border border-secondary" (click)="selectAddress()">
-            <div><span class="primary-highlight-text-color">Select Address <i class="fa fa-chevron-right"></i></span></div>
-            <div [innerHTML]="defaultAddress.displayAddress('StreetAddress')"></div>
-            <div [innerHTML]="defaultAddress.displayAddress('Barangay')"></div>
-            <div [innerHTML]="defaultAddress.displayAddress('City/Municipality')"></div>
-            <div [innerHTML]="defaultAddress.displayAddress('Province')"></div>
-            <div [innerHTML]="defaultAddress.displayAddress('Region')"></div>
-        </div>
-    </div>
     <div class="row mt-3">
-        <div class="col-12 col-md-8 offset-md-2 col-lg-7 offset-lg-1" *ngFor="let merchant of merchants">
+        <div class="col-12 col-lg-8">
+            <div class="row mt-3" *ngIf="!isMobile">
+                <div class="col-10 d-flex align-items-center">
+                    <span class="font-weight-bold font-md">Delivery Address</span>
+                </div>
+                <div class="col-2 d-flex justify-content-end align-items-center " *ngIf="defaultAddress.id">
+                    <span class="cursor-pointer" (click)="updateDefaultAddress()"><i class="fa fa-pencil mr-2"></i> Update</span>
+                </div>
+                <div class="col-12" *ngIf="!defaultAddress.id && !isLoading">
+                    <add-shipping-address-form></add-shipping-address-form>
+                </div>
+            </div>
+            <div class="row mb-2 p-3" *ngIf="defaultAddress?.barangay">
+                <div class="col-12 pt-2 pb-2" (click)="selectAddress()">
+                    <div [innerHTML]="defaultAddress.displayAddress('StreetAddress')"></div>
+                    <div [innerHTML]="defaultAddress.displayAddress('Barangay')"></div>
+                    <div [innerHTML]="defaultAddress.displayAddress('City/Municipality')"></div>
+                    <div [innerHTML]="defaultAddress.displayAddress('Province')"></div>
+                    <div [innerHTML]="defaultAddress.displayAddress('Region')"></div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12" *ngFor="let merchant of merchants">
+                    <div class="row">
+                        <div class="col-12 d-flex align-items-center">
+                            <i class="fa fa-shopping-basket class ml-2"></i> <span class="font-md font-weight-bold">{{ merchant.name }}</span>
+                        </div>
+                        <!-- <div class="col-5  d-flex ">
+                        </div> -->
+                    </div>
+                    <div class="row mt-2" *ngFor="let cartItem of merchantCartItems(merchant)">
+                        <div class="col-3 col-md-2 pr-lg-0">
+                            <img class="ml-2" [src]="dashboardService.publicUrl + cartItem.product.productImgPath" width="70" height="70">
+                        </div>
+                        <div class="col-9 col-md-10 pr-lg-3">
+                            <div class="row">
+                                <div class="col-12 pl-lg-0">
+                                    <span>{{ cartItem.product.productName }}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 pl-lg-0">
+                                    <span class="font-md primary-highlight-text-color font-weight-bold">{{ cartItem.product.price | number: '1.2-2' }}</span>
+                                </div>
+                                <div class="col-4 pl-lg-0 d-flex justify-content-end align-items-center">
+                                    <span class="">Qty: {{cartItem.quantity }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="row mt-3">
+                <div class="col-12">
+                    <span class="font-weight-bold font-md">Select Payment Option</span>
+                </div>
+            </div>
             <div class="row">
-                <div class="col-12 d-flex align-items-center">
-                    <i class="fa fa-shopping-basket class ml-2"></i> <span class="font-md font-weight-bold">{{ merchant.name }}</span>
-                </div>
-                <!-- <div class="col-5  d-flex ">
-                </div> -->
-            </div>
-            <div class="row mt-2" *ngFor="let cartItem of merchantCartItems(merchant)">
-                <div class="col-3 pr-lg-0">
-                    <img class="ml-2" [src]="dashboardService.publicUrl + cartItem.product.productImgPath" width="70" height="70">
-                </div>
-                <div class="col-9 pr-lg-3">
-                    <div class="row">
-                        <div class="col-12 pl-lg-0">
-                            <span>{{ cartItem.product.productName }}</span>
+                <div class="col-12">
+                    <div *ngIf="!isMobile">
+                        <div (click)="updatePaymentOption(PaymentOption.CashOnDelivery)" class="cursor-pointer border border-rounded border-info container d-flex flex-column justify-content-between">
+                            <div class="row mb-5">
+                                <div class="col-11">
+                                    <i class="fa font-md mr-2 fa-money"></i>
+                                    <span class="font-md">Cash On Delivery</span>
+                                </div>
+                                <div class="col-1">
+                                    <input [checked]="selectedPaymentOption === PaymentOption.CashOnDelivery" class="form-check-input" type="radio" name="flexRadioDefault">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <span class="text-muted font-xs">Payment upon delivery</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-8 pl-lg-0">
-                            <span class="font-md primary-highlight-text-color font-weight-bold">{{ cartItem.product.price | number: '1.2-2' }}</span>
+                    <div *ngIf="isMobile" class="payment-option border border-rounded border-info container d-flex flex-column justify-content-between">
+                        <div class="row mb-5">
+                            <div class="col-4 primary-highlight-text-color pr-1">
+                                <i class="fa fa-money"></i>
+                            </div>
+                            <div class="col p-0">
+                                Cash On Delivery
+                            </div>
                         </div>
-                        <div class="col-4 pl-lg-0 d-flex justify-content-end align-items-center">
-                            <span class="">Qty: {{cartItem.quantity }}</span>
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="text-muted font-xs">Payment upon delivery</span>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-12">
-            <span class="font-weight-bold font-md">Select Payment Option</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="payment-option border border-rounded border-info container d-flex flex-column justify-content-between">
-                <div class="row mb-5">
-                    <div class="col-4 primary-highlight-text-color pr-1">
-                        <i class="fa fa-money"></i>
-                    </div>
-                    <div class="col p-0">
-                        Cash On Delivery
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <span class="text-muted font-xs">Payment upon delivery</span>
                     </div>
                 </div>
             </div>
+            <div class="row mt-3">
+                <div class="col-8">
+                    <span>Item(s) Subtotal</span>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <span>{{ calculateSelectedItems() | number: '1.2-2' }}</span>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-8">
+                    <span>Shipping Fee Subtotal</span>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <span>100.00</span>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-8">
+                    <span class="font-weight-bold font-md">Total</span> <span class="pl-2 text-muted">(VAT Included)</span>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <span class="font-weight-bold font-md">{{ calculateGrandTotal() | number: '1.2-2' }}</span>
+                </div>
+            </div>
+            <div class="row sticky-place-order p-2 d-flex d-lg-none">
+                <div class="col-7 d-flex justify-content-en align-items-center">
+                    <span class="font-weight-bold font-md">Total: </span>
+                    <span class="font-weight-bold font-md primary-highlight-text-color">100.00</span>
+                </div>
+                <div class="col-5">
+                    <button class="btn w-100 h-100 pt-1 pb-1 m-0 font-md mr-md-2 bg-primary-highlight-color text-white" (click)="placeOrder()">Place Order</button>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <button [disabled]="!selectedPaymentOption" class="btn bg-primary-highlight-color w-100 text-white font-md" (click)="placeOrder()">
+                        Place Order
+                    </button>
+                    <div *ngIf="paymentOptionError" class="text-danger mt-1">
+                        {{paymentOptionError}}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row mt-3">
-        <div class="col-8">
-            <span>Item(s) Subtotal</span>
-        </div>
-        <div class="col-4 d-flex justify-content-end">
-            <span>100.00</span>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-8">
-            <span>Shipping Fee Subtotal</span>
-        </div>
-        <div class="col-4 d-flex justify-content-end">
-            <span>100.00</span>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-8">
-            <span class="font-weight-bold font-md">Total</span> <span class="pl-2 text-muted">(VAT Included)</span>
-        </div>
-        <div class="col-4 d-flex justify-content-end">
-            <span class="font-weight-bold font-md">100.00</span>
-        </div>
-    </div>
-    <div class="row sticky-place-order p-2 d-flex d-lg-none">
-        <div class="col-7 d-flex justify-content-en align-items-center">
-            <span class="font-weight-bold font-md">Total: </span>
-            <span class="font-weight-bold font-md primary-highlight-text-color">100.00</span>
-        </div>
-        <div class="col-5">
-            <button class="btn w-100 h-100 pt-1 pb-1 m-0 font-md mr-md-2 bg-primary-highlight-color text-white" (click)="placeOrder()">Place Order</button>
-        </div>
-    </div>
+    
 </div>
 <app-footer></app-footer>

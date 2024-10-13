@@ -13,12 +13,15 @@ export interface Address {
     barangay: Barangay;
     region: Region;
     province: Province;
+    contactNumber: string;
     cityMunicipality: CityMunicipality;
 }
-export class AddressDTO  extends DTO {
+export class AddressDTO  extends DTO implements Address {
     id: Number;
     blockLotFloorBuildingName: string;
+    name: string;
     streetAddress: string;
+    contactNumber: string;
     zipCode: string;
     barangay: BarangayDTO;
     region: RegionDTO;

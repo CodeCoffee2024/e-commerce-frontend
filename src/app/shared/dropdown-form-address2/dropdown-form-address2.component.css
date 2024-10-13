@@ -1,0 +1,49 @@
+
+
+.loading-logo {
+  text-align: center;
+}
+.float {
+  max-height: 290px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.float-max {
+  max-height: 245px;
+}
+.loading-logo img {
+  max-width: 200px; /* Adjust as needed */
+  position: absolute;
+}
+.hide-scrollbar {
+  overflow: auto; /* Ensure the element is scrollable */
+  scrollbar-width: none; /* Firefox hides scrollbar */
+  -ms-overflow-style: none; /* IE and Edge hides scrollbar */
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Hide scrollbar */
+}
+.max-height {
+  max-height: 290px;
+  min-height: 290px;
+}
+
+.spinner {
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--primary-highlight-color);
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

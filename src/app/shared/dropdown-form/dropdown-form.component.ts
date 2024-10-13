@@ -32,9 +32,6 @@ export class DropdownFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.formModel) {
-      this.searchText = this.formModel[this.field];
-    }
     if (this.disabled) {
       this.searchText = null;
     }

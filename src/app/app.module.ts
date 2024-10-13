@@ -33,6 +33,10 @@ import { Page404Component } from './page404/page404.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { Page403Component } from './page403/page403.component';
 import { MobileSelectAddressComponent } from './mobile-select-address/mobile-select-address.component';
+import { DropdownFormAddress2Component } from './shared/dropdown-form-address2/dropdown-form-address2.component';
+import { AddShippingAddressFormComponent } from './add-shipping-address/add-shipping-address-form/add-shipping-address-form.component';
+import { ListShippingAddressComponent } from './shipping-address/list-shipping-address/list-shipping-address.component';
+import { AddShippingAddressModalComponent } from './add-shipping-address/add-shipping-address-modal/add-shipping-address-modal.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +64,11 @@ import { MobileSelectAddressComponent } from './mobile-select-address/mobile-sel
     Page404Component,
     ConfirmationDialogComponent,
     Page403Component,
-    MobileSelectAddressComponent
+    MobileSelectAddressComponent,
+    DropdownFormAddress2Component,
+    AddShippingAddressFormComponent,
+    ListShippingAddressComponent,
+    AddShippingAddressModalComponent
   ],
   imports: [
     BrowserModule,

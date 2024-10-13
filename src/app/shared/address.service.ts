@@ -28,6 +28,11 @@ export class AddressService extends ApiService {
     this.setParameters(params, true);
     return this.getRequest('address/regions');
   }
+  searchRegion(params) {
+    this.setAuthentication(localStorage.getItem('token'));
+    this.setParameters(params, true);
+    return this.getRequest('region/search');
+  }
   allRegions() {
     return this.getRequest('region/all');
   }

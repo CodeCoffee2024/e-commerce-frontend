@@ -27,7 +27,7 @@ export class AuthService extends ApiService {
     return this.afAuth.signOut();
   }
   verifyAuth() {
-    const token = JSON.parse(localStorage.getItem('auth'))?.user.token;
+    const token = JSON.parse(localStorage.getItem('auth'))?.user?.token;
     if (token) {
       this.setAuthentication(token);
       this.getRequest('user/checkAccess').subscribe({

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DockElementComponent } from '../dock-element/dock-element.component';
 import { MobileSingleProductSpecificationComponent } from '../mobile-single-product-specification/mobile-single-product-specification.component';
@@ -15,6 +15,11 @@ import { AuthService } from '../shared/auth.service';
 import { MobileLoginComponent } from '../mobile-login/mobile-login.component';
 import { LoginComponent } from '../login/login.component';
 import { LoadingService } from '../shared/loading.service';
+import { RegionDTO } from '../models/region';
+import { ProvinceDTO } from '../models/province';
+import { CityMunicipalityDTO } from '../models/cityMunicipality';
+import { BarangayDTO } from '../models/barangay';
+import { AddressService } from '../shared/address.service';
 
 @Component({
   selector: 'app-single-product',
@@ -23,7 +28,15 @@ import { LoadingService } from '../shared/loading.service';
 })
 export class SingleProductComponent implements OnInit{
   product: Product;
+  region: RegionDTO = new RegionDTO();
+  regions: RegionDTO [] = [];
+  province: ProvinceDTO = new ProvinceDTO();
+  provinces: ProvinceDTO[] = [];
+  cityMunicipality: CityMunicipalityDTO = new CityMunicipalityDTO();
+  cityMunicipalities: CityMunicipalityDTO[] = [];
+  barangay: BarangayDTO = new BarangayDTO();
   quantity = 1;
+  showDropdown = false;
   id : Number;
   constructor(private modalService: NgbModal,
     private cartService: CartService,
@@ -33,7 +46,8 @@ export class SingleProductComponent implements OnInit{
     public dashboardService: DashboardService,
     private singleProductService: SingleProductService,
     private notificationService: NotificationService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private addressService: AddressService
   ) {}
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -45,6 +59,16 @@ export class SingleProductComponent implements OnInit{
       this.product = productMapper.map(product as Product);
       this.loadingService.hide();
     });
+  }
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+    if (this.showDropdown) {
+      this.addressService.allRegions().subscribe({
+        next: (it:any) => {
+          this.regions = this.region.regionMapper(it?.data);
+        }
+      });
+    }
   }
   increment() {
     this.quantity ++;
@@ -174,5 +198,66 @@ export class SingleProductComponent implements OnInit{
   changeAddress() {
     localStorage.setItem('lastLocation', '/product/'+ this.id);
     this.router.navigate(['select-address-mobile']);
+  }
+  clearRegion() {
+    this.region = new RegionDTO();
+    this.province = new ProvinceDTO();
+    this.cityMunicipality = new CityMunicipalityDTO();
+    this.loadingService.show();
+    this.addressService.allRegions().subscribe({
+      next: (regions:any) => {
+        this.regions = this.region.regionMapper(regions?.data);
+      },complete: ()=> {
+        this.loadingService.hide();
+      }
+    })
+  }
+  selectRegion(region: RegionDTO) {
+    this.region = region;
+    this.loadingService.show();
+    this.addressService.allProvinces({region: region.id}).subscribe({
+      next: (provinces:any) => {
+        this.provinces = this.province.provinceMapper(provinces?.data);
+      },complete: () => {
+        this.loadingService.hide();
+      }
+    })
+  }
+  selectProvince(province: ProvinceDTO) {
+    this.province = province;
+    this.cityMunicipality = new CityMunicipalityDTO();
+    this.loadingService.show();
+    this.addressService.allCityMunicipalities({region: this.region.id, province: this.province.id}).subscribe({
+      next: (cityMunicipalities:any) => {
+        this.cityMunicipalities = this.cityMunicipality.cityMunicipalityMapper(cityMunicipalities?.data);
+      },complete: () => {
+        this.loadingService.hide();
+      }
+    })
+  }
+  selectCityMunicipality(cityMunicipality: CityMunicipalityDTO) {
+    this.cityMunicipality = cityMunicipality;
+    let lastLocation = localStorage.getItem('lastLocation');
+    if (lastLocation) {
+      localStorage.setItem('currentCityMunicipality', JSON.stringify(this.cityMunicipality));
+      localStorage.removeItem('lastLocation');
+      this.router.navigate([lastLocation]);
+    } else {
+      this.router.navigate(['']);
+    }
+  }
+  @HostListener('document:click', ['$event'])
+  handleOutsideClick(event): void {
+    if (event.target.classList.contains('change-button')) {
+      return;
+    }
+    this.showDropdown = event.target.classList.contains('address');
+    if (this.showDropdown) {
+      this.addressService.allRegions().subscribe({
+        next: (it:any) => {
+          this.regions = this.region.regionMapper(it?.data);
+        }
+      });
+    }
   }
 }

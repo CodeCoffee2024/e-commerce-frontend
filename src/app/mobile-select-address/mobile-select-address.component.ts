@@ -30,6 +30,13 @@ export class MobileSelectAddressComponent implements OnInit{
   }
   ngOnInit(): void {
     this.loadingService.show();
+    this.clearRegion();
+  }
+  clearRegion() {
+    this.region = new RegionDTO();
+    this.province = new ProvinceDTO();
+    this.cityMunicipality = new CityMunicipalityDTO();
+    this.loadingService.show();
     this.addressService.allRegions().subscribe({
       next: (regions:any) => {
         this.regions = this.region.regionMapper(regions?.data);
@@ -51,6 +58,7 @@ export class MobileSelectAddressComponent implements OnInit{
   }
   selectProvince(province: ProvinceDTO) {
     this.province = province;
+    this.cityMunicipality = new CityMunicipalityDTO();
     this.loadingService.show();
     this.addressService.allCityMunicipalities({region: this.region.id, province: this.province.id}).subscribe({
       next: (cityMunicipalities:any) => {

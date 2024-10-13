@@ -1,0 +1,134 @@
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-12 p-0 p-lg-2 col-lg-6">
+            <div class="form-group mb-1">
+                <label for="streetAddreess" class="font-sm">House #/ BLK/ LT #/ Flr #/ Bldg. Name</label>
+                <input type="text" [class]="addressForm.errors?.blockLotFloorBuildingName ? 'border-danger': ''" class="form-control form-control-md" [(ngModel)]="addressForm.blockLotFloorBuildingName" placeholder="House/Unit/Flr #/Bldg Name/Blk/Lot">
+            </div>
+            <div *ngIf="addressForm.errors?.blockLotFloorBuildingName" class="text-danger">
+                {{ addressForm.errors?.blockLotFloorBuildingName }}
+            </div>
+        </div>
+        <div class="col-12 p-0 p-lg-2 col-lg-6">
+            <div class="form-group mb-1">
+                <label for="name" class="font-sm">Name</label>
+                <input type="text" [class]="addressForm.errors?.name ? 'border-danger': ''" class="form-control form-control-md" [(ngModel)]="addressForm.name" placeholder="Enter Name">
+            </div>
+            <div *ngIf="addressForm.errors?.name" class="text-danger">
+                {{ addressForm.errors?.name }}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-12 p-0 p-lg-2 col-lg-6">
+            <div class="form-group mb-0">
+                <label for="streetAddreess" class="font-sm">Street Name</label>
+                <input type="text" [class]="addressForm.errors?.streetAddress ? 'border-danger': ''" class="form-control form-control-md" [(ngModel)]="addressForm.streetAddress" placeholder="Enter Street Name">
+            </div>
+            <div *ngIf="addressForm.errors?.streetAddress" class="text-danger">
+                {{ addressForm.errors?.streetAddress }}
+            </div>
+        </div>
+        <div class="col-12 p-0 p-lg-2 col-lg-6">
+            <dropdown-form 
+                [data]="barangays" 
+                [(formModel)]="addressForm.barangay"
+                [field]="'description'"
+                [error]="addressForm.errors?.barangay"
+                [label]="'Barangay'"
+                [labelClass]="'form-label'"
+                (userSearchedText)="searchBarangays($event)">>
+            </dropdown-form>
+            <div *ngIf="addressForm.errors?.barangay" class="text-danger">
+                {{ addressForm.errors?.barangay }}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        
+        <div class="col-12 p-0 p-lg-2 col-lg-6">
+            <div class="col-12 p-0">
+                <dropdown-form 
+                    [data]="cityMunicipalities" 
+                    [(formModel)]="addressForm.cityMunicipality"
+                    [field]="'description'"
+                    [label]="'City/Municipality'"
+                    [error]="addressForm.errors?.cityMunicipality"
+                    [labelClass]="'form-label'"
+                    [disabled]="!addressForm.barangay"
+                    (userSearchedText)="searchCityMunicipalities($event)">>
+                </dropdown-form>
+                <div *ngIf="addressForm.errors?.cityMunicipality" class="text-danger">
+                    {{ addressForm.errors?.cityMunicipality }}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 p-0 p-0 p-lg-2 col-lg-6">
+            <dropdown-form 
+                [data]="provinces" 
+                [(formModel)]="addressForm.province"
+                [disabled]="!addressForm.barangay || !addressForm.cityMunicipality"
+                [error]="addressForm.errors?.province"
+                [field]="'description'"
+                [label]="'Province'"
+                [labelClass]="'form-label'"
+                (userSearchedText)="searchProvinces($event)">
+            </dropdown-form>
+            <div *ngIf="addressForm.errors?.province" class="text-danger">
+                {{ addressForm.errors?.province }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 p-0 p-0 p-lg-2 col-lg-6">
+            <dropdown-form 
+                [data]="regions" 
+                [(formModel)]="addressForm.region"
+                [disabled]="!addressForm.barangay || !addressForm.cityMunicipality || !addressForm.province"
+                [error]="addressForm.errors?.region"
+                [field]="'description'"
+                [label]="'Region'"
+                [labelClass]="'form-label'"
+                (userSearchedText)="searchRegions($event)">
+            </dropdown-form>
+            <div *ngIf="addressForm.errors?.province" class="text-danger">
+                {{ addressForm.errors?.province }}
+            </div>
+        </div>
+        <div class="col-12 p-0 p-0 p-lg-2 col-lg-6">
+            <div class="form-group mb-0">
+                <label for="streetAddreess" class="font-sm">Zipcode</label>
+                <input type="text" [class]="addressForm.errors?.zipCode ? 'border-danger': ''" class="form-control form-control-md" [(ngModel)]="addressForm.zipCode" placeholder="Enter Zipcode">
+            </div>
+            <div *ngIf="addressForm.errors?.zipCode" class="text-danger">
+                {{ addressForm.errors?.zipCode }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 p-0 p-lg-2 col-lg-6">
+            <div class="form-group mb-1">
+                <label for="streetAddreess" class="font-sm">Contact Number</label>
+                <input type="text" [class]="addressForm.errors?.contactNumber ? 'border-danger': ''" class="form-control form-control-md" [(ngModel)]="addressForm.contactNumber" placeholder="(+63)">
+            </div>
+            <div *ngIf="addressForm.errors?.contactNumber" class="text-danger">
+                {{ addressForm.errors?.contactNumber }}
+            </div>
+        </div>
+        <div class="col-12 p-0 p-0 p-lg-2 col-lg-6 d-flex justify-content-start align-items-center">
+            <label class="switch mr-2">
+                <input type="checkbox" class="default" [ngModel]="addressForm.isDefaultDeliveryAddress" (change)="isDefaultDeliveryAddressChanged()">
+                <span class="slider round" [ngClass]="addressForm.isDefaultDeliveryAddress ? 'slider-on' : 'slider-off'" ></span>
+            </label>
+            <label class="m-0">Set as Default Delivery Address</label>
+            <div *ngIf="addressForm.errors?.isDefaultDeliveryAddress" class="text-danger">
+                {{ addressForm.errors?.isDefaultDeliveryAddress }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 p-0 offset-6 col-lg-6 d-flex align-items-center justify-content-center w-100">
+            <button class="btn bg-primary-highlight-color w-100 text-white" (click)="addShippingAddress()"><i class="fa fa-check mr-1"></i>Save</button>
+        </div>
+    </div>
+</div>

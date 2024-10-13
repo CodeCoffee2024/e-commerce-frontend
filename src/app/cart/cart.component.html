@@ -22,42 +22,46 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-8 offset-md-2 col-lg-7 offset-lg-1" *ngFor="let merchant of merchants">
+        <div class="col-12 col-md-8 offset-md-2 col-lg-7 offset-lg-1">
             <div class="row">
-                <div class="col-12">
-                    <div class="form-check align-items-center">
-                        <input type="checkbox" class="form-check-input form-checkbox-md" (change)="toggleItems(merchant)" [checked]="checkSelectedMerchantItems(merchant)">
-                        <label class="form-check-label d-flex align-items-center">
-                            <i class="fa fa-shopping-basket class ml-2"></i> <span class="font-md font-weight-bold">{{ merchant.name }}</span>
-                        </label>
-                    </div>
-                </div>
-                <!-- <div class="col-5  d-flex ">
-                </div> -->
-            </div>
-            <div class="row mt-2" *ngFor="let cartItem of merchantCartItems(merchant)">
-                <div class="col-1 pr-lg-0">
-                    <div class="form-check align-items-center">
-                        <input type="checkbox" class="form-check-input form-checkbox-md" [checked]="cartItem.isSelected"  (change)="toggleCartItem(cartItem)">
-                    </div>
-                </div>
-                <div class="col-3 pl-0 col-lg-2 pr-lg-0">
-                    <img class="ml-2" [src]="dashboardService.publicUrl + cartItem.product.productImgPath" width="70" height="70">
-                </div>
-                <div class="col-7 p-0 col-lg-9 pr-lg-3">
+                <div class="col-12" *ngFor="let merchant of merchants">
                     <div class="row">
-                        <div class="col-12 pl-lg-0">
-                            <span>{{ cartItem.product.productName }}</span>
+                        <div class="col-12">
+                            <div class="form-check align-items-center">
+                                <input type="checkbox" class="form-check-input form-checkbox-md" (change)="toggleItems(merchant)" [checked]="checkSelectedMerchantItems(merchant)">
+                                <label class="form-check-label d-flex align-items-center">
+                                    <i class="fa fa-shopping-basket class ml-2"></i> <span class="font-md font-weight-bold">{{ merchant.name }}</span>
+                                </label>
+                            </div>
                         </div>
+                        <!-- <div class="col-5  d-flex ">
+                        </div> -->
                     </div>
-                    <div class="row">
-                        <div class="col-8 pl-lg-0">
-                            <span class="font-md primary-highlight-text-color font-weight-bold">{{ cartItem.product.price | number: '1.2-2' }}</span>
+                    <div class="row mt-2" *ngFor="let cartItem of merchantCartItems(merchant)">
+                        <div class="col-1 pr-lg-0">
+                            <div class="form-check align-items-center">
+                                <input type="checkbox" class="form-check-input form-checkbox-md" [checked]="cartItem.isSelected"  (change)="toggleCartItem(cartItem)">
+                            </div>
                         </div>
-                        <div class="col-4 pl-lg-0 d-flex justify-content-end">
-                            <button class="btn btn-secondary" (click)="decrement(cartItem.product)"> - </button>
-                            <input type="number" [(ngModel)]="cartItem.quantity" (change)="updateProductQuantity(cartItem)" class="form-control ml-1 mr-1 w-40 text-center">
-                            <button class="btn btn-secondary" (click)="increment(cartItem.product)"> + </button>
+                        <div class="col-3 pl-0 col-lg-2 pr-lg-0">
+                            <img class="ml-2" [src]="dashboardService.publicUrl + cartItem.product.productImgPath" width="70" height="70">
+                        </div>
+                        <div class="col-7 p-0 col-lg-9 pr-lg-3">
+                            <div class="row">
+                                <div class="col-12 pl-lg-0">
+                                    <span>{{ cartItem.product.productName }}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 pl-lg-0">
+                                    <span class="font-md primary-highlight-text-color font-weight-bold">{{ cartItem.product.price | number: '1.2-2' }}</span>
+                                </div>
+                                <div class="col-4 pl-lg-0 d-flex justify-content-end">
+                                    <button class="btn btn-secondary" (click)="decrement(cartItem.product)"> - </button>
+                                    <input type="number" [(ngModel)]="cartItem.quantity" (change)="updateProductQuantity(cartItem)" class="form-control ml-1 mr-1 w-40 text-center">
+                                    <button class="btn btn-secondary" (click)="increment(cartItem.product)"> + </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

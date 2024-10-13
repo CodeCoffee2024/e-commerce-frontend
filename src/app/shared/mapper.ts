@@ -8,4 +8,11 @@ export class Mapper<TFrom, TTo> {
   mapArray(fromArray: TFrom[]): TTo[] {
     return fromArray.map(this.mapFunction);
   }
+
+  entityMapper(data) {
+    let entityMapper = new Mapper<any, any>((entity: any): any => {
+        return entity;
+    })
+    return entityMapper.map(data);
+  }
 }

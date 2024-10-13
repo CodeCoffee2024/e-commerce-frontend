@@ -12,10 +12,11 @@ export class AddressForm extends FormsModule {
     barangay: BarangayDTO;
     region: RegionDTO;
     province: ProvinceDTO;
+    isSelected: boolean;
     cityMunicipality: CityMunicipalityDTO;
     isDefaultDeliveryAddress: boolean = false;
     format (addressForm: AddressForm) {
-        this.id = addressForm.id;
+        this.id = addressForm?.id;
         this.blockLotFloorBuildingName = addressForm.blockLotFloorBuildingName;
         this.streetAddress = addressForm.streetAddress;
         this.zipCode = addressForm.zipCode;

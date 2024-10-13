@@ -1,0 +1,12 @@
+<div class="container pb-3">
+    <div class="row mt-3">
+        <div class="col-12">
+            <h4>Add New Shipping Address</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class=col-12>
+            <add-shipping-address-form [reloadAfterSave]="reloadAfterSave" (hasDefaultAddress)="hasNewDefaultAddress($event)"></add-shipping-address-form>
+        </div>
+    </div>
+</div>
