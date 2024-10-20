@@ -1,0 +1,78 @@
+
+
+<div class="col-12 page">
+    <app-header ></app-header>
+    <div class="row pt-3 bg-white mt-0" *ngIf="isMobile">
+        <div class="col-3 pr-0 d-flex align-items-center">
+            <label class="mb-0">My Orders</label>
+        </div>
+        <div class="col-9 pl-0">
+            <div class="form-group mb-0 w-100">
+                <input type="text" class="form-control form-control-md" [(ngModel)]="searchText" placeholder="Search by product or merchant">
+            </div>
+        </div>
+    </div>
+    <div class="row bg-white">
+        <div class="d-flex justify-content-between align-items-center col-12">
+            <div class="p-2" (click)="updateSelectedStatus(OrderStatusType.ALL)" [ngClass]="selectedStatus == OrderStatusType.ALL ? 'primary-highlight-text-color': 'pb-1'">All <div class="w-100 bg-primary-highlight-color pb-1" *ngIf="selectedStatus == OrderStatusType.ALL"></div></div>
+            <div class="p-2" (click)="updateSelectedStatus(OrderStatusType.PENDING)" [ngClass]="selectedStatus == OrderStatusType.PENDING ? 'primary-highlight-text-color': 'pb-1'">Pending <div class="w-100 bg-primary-highlight-color pb-1" *ngIf="selectedStatus == OrderStatusType.PENDING"></div></div>
+            <div class="p-2" (click)="updateSelectedStatus(OrderStatusType.TOSHIP)" [ngClass]="selectedStatus == OrderStatusType.TOSHIP ? 'primary-highlight-text-color': 'pb-1'">To Ship <div class="w-100 bg-primary-highlight-color pb-1" *ngIf="selectedStatus == OrderStatusType.TOSHIP"></div></div>
+            <div class="p-2" (click)="updateSelectedStatus(OrderStatusType.FORDELIVERY)" [ngClass]="selectedStatus == OrderStatusType.FORDELIVERY ? 'primary-highlight-text-color': 'pb-1'">For Delivery <div class="w-100 bg-primary-highlight-color pb-1" *ngIf="selectedStatus == OrderStatusType.FORDELIVERY"></div></div>
+            <div class="p-2" (click)="updateSelectedStatus(OrderStatusType.RECEIVED)" [ngClass]="selectedStatus == OrderStatusType.RECEIVED ? 'primary-highlight-text-color': 'pb-1'">Received <div class="w-100 bg-primary-highlight-color pb-1" *ngIf="selectedStatus == OrderStatusType.RECEIVED"></div></div>
+        </div>
+    </div>
+    
+    <ng-container *ngIf="!isLoading">
+        <div class="row mt-1 bg-white pb-1 pt-2" *ngFor="let merchant of merchants">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-8">
+                        <i class="fa fa-shopping-basket class mr-2"></i> <span class="font-md font-weight-bold">{{ merchant.name }}</span>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <span class="primary-highlight-text-color font-weight-bold">{{ order.status }}</span>
+                    </div>
+                </div>
+                <div class="row p-2" *ngFor="let item of getItemsOfMerchant(merchant)">
+                    <div class="col-3 pl-2 col-lg-2 pr-lg-0">
+                        <img [src]="dashboardService.publicUrl + item.product.productImgPath" width="70" height="70">
+                    </div>
+                    <div class="col-9 p-0 col-lg-9 pr-lg-3">
+                        <div class="row mt-2">
+                            <div class="col-12 pl-lg-0 pl-4">
+                                <span>{{ item.product.productName }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-7 pl-lg-0 pl-4">
+                                <span class="font-weight-bold">{{ item.product.price | number: '1.2-2' }}</span>
+                            </div>
+                            <div class="col-5 d-flex justify-content-end">
+                                <span class="font-weight-bold">Quantity: {{ item.quantity }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-end font-sm">
+                                Total ({{ getItemsOfMerchant(merchant).length}} item{{getItemsOfMerchant(merchant).length > 1 ? 's' : ''}}): <span class="font-weight-bold ml-1">{{merchantItemsTotal(merchant).total| number: '1.2-2'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-1 bg-white pb-3 pt-2" *ngIf="merchants.length == 0">
+            <div class="col-12 d-flex justify-content-center">
+                <img src="assets/no-item-display.png" width="100%">
+            </div>
+            <div class="col-12">
+                <div class="'font-md font-weight-bold d-flex justify-content-center">Your order is empty</div>
+                <div class=" d-flex justify-content-center mt-1 mb-1">Shop your favorite items</div>
+                <div class=" d-flex justify-content-center">
+                    <button class="btn bg-primary-highlight-color text-white" [routerLink]="['']">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+<app-footer ></app-footer>

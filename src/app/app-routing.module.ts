@@ -13,6 +13,7 @@ import { UpdateShippingAddressComponent } from './update-shipping-address/update
 import { Page404Component } from './page404/page404.component';
 import { Page403Component } from './page403/page403.component';
 import { MobileSelectAddressComponent } from './mobile-select-address/mobile-select-address.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent, pathMatch: 'full'}, 
@@ -27,6 +28,8 @@ const routes: Routes = [
   {path: 'select-address-mobile', component: MobileSelectAddressComponent, pathMatch: 'full'},
   {path: 'add-shipping-address', component: AddShippingAddressComponent, pathMatch: 'full'},
   {path: 'update-shipping-address/:id', component: UpdateShippingAddressComponent, pathMatch: 'full'},
+  {path: 'my-orders', component: MyOrdersComponent, pathMatch: 'full'},
+  {path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
   {path: '**', component: Page404Component }
 ];
 

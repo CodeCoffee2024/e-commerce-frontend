@@ -13,7 +13,6 @@ import { LoadingService } from '../shared/loading.service';
   encapsulation: ViewEncapsulation.None  // Disable view encapsulation
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-
   images = [
     {
       url: 'assets/ad-1.jpg'

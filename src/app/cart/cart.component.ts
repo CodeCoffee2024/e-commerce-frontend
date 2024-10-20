@@ -9,6 +9,8 @@ import { NotificationService } from '../notification/notification.service';
 import { NotificationType } from '../models/notification';
 import { LoadingService } from '../shared/loading.service';
 import { AuthService } from '../shared/auth.service';
+import { AddressForm } from '../form/address.form';
+import { AddressService } from '../shared/address.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,6 +20,8 @@ import { AuthService } from '../shared/auth.service';
 export class CartComponent implements OnInit {
   carts: Cart[];
   quantity: Number = 0;
+  isLoading = false;
+  defaultAddress: AddressForm = new AddressForm();
   totalCartItems = 0;
   constructor(
     private cartService: CartService,
@@ -25,7 +29,8 @@ export class CartComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private authService: AuthService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private addressService: AddressService
   ){}
   ngOnInit(): void {
     this.loadingService.show();
@@ -34,19 +39,44 @@ export class CartComponent implements OnInit {
       this.router.navigate(['403']);
       return;
     }
+    this.cartService.isLoading$.subscribe(isLoading => {
+      this.isLoading = isLoading;
+      if (this.isLoading) {
+        this.loadingService.show();
+      } else {
+        this.loadingService.hide();
+      }
+    });
+    this.loadDefaultAddress();
+  }
+  loadDefaultAddress() {
+    if (localStorage.getItem('selectedAddress')) {
+      let param = {id: localStorage.getItem('selectedAddress')}
+      this.addressService.getAddress(param).subscribe({
+        next: (data : any) => {
+          if (data?.data) {
+            this.defaultAddress = this.defaultAddress.format(data?.data as AddressForm);
+          }
+        }, complete: () => {
+          this.loadingService.hide();
+        }
+      })
+    } else {
+      this.addressService.defaultDeliveryAddress.subscribe({
+        next: (data : any) => {
+          if (data?.data) {
+            this.defaultAddress = this.defaultAddress.format(data?.data as AddressForm);
+            localStorage.setItem('selectedAddress', this.defaultAddress.id.toString());
+          }
+        }, complete: () => {
+          this.loadingService.hide();
+        }
+      })
+    }
   }
 
   get merchants() {
     return this.cartService.getUniqueMerchants();
-  }
-  get hasLoading() {
-    console.log(this.cartService.hasLoading());
-    if (this.cartService.hasLoading()) {
-      this.loadingService.show();
-    } else {
-      this.loadingService.hide();
-    }
-    return this.cartService.hasLoading();
   }
   merchantCartItems(merchant: Merchant): Cart[] {
     return this.cartService.getItemsOfMerchant(merchant);
@@ -105,7 +135,7 @@ export class CartComponent implements OnInit {
   }
 
   updateProductQuantity(cartItem:Cart) {
-    if (!this.hasLoading) {
+    if (!this.isLoading) {
       this.cartService.updateCartItem(cartItem);
     }
   }

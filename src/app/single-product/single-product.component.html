@@ -1,6 +1,6 @@
-<div class="col-12" *ngIf="product">
+<div class="col-12 bg-white page">
     <app-header></app-header>
-    <div class="row product-specs">
+    <div class="row product-specs" *ngIf="product">
         <div class="col-12 col-md-8 offset-md-2 offset-lg-0 col-lg-4 mb-4 d-flex justify-content-center">
             <img class="mt-4 product-img" src="assets/product.jfif">
         </div>
@@ -115,7 +115,7 @@
             </div>
         </div>
     </div>
-    <div class="row d-none d-lg-block">
+    <div class="row d-none d-lg-block" *ngIf="product">
         <div class="col-12 product-specs">
             <div class="row primary-text-color">
                 <div class="col-12 font-md">
@@ -180,7 +180,7 @@
         </div>
     </div>
 </div>
-<div class="row sticky-buy-options p-2 d-flex d-lg-none">
+<div class="row sticky-buy-options p-2 d-flex d-lg-none"  *ngIf="product">
     <div class="col-1 col-md-1">
         <button class="btn"> <i class="fa primary-highlight-text-color h-100 p-md-3 font-md fa-shopping-basket"></i></button>
     </div>

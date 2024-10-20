@@ -6,6 +6,20 @@
 html {
     background-color: #f5f5f5;
 }
+.page-admin {
+  min-height: 73vh;
+  max-height: 73vh;
+}
+.page-admin table {
+  max-height: 60vh;
+}
+.admin-loading {
+    display: flex;              /* Use Flexbox */
+    justify-content: center;    /* Center horizontally */
+    align-items: center;        /* Center vertically */
+    height: 100vh;             /* Full height (or adjust as necessary) */
+    position: relative;         /* To position child elements if needed */
+}
 * {
     font-size: 12px;
 }
@@ -120,7 +134,11 @@ input[type=number] {
   -webkit-transition: .4s;
   transition: .4s;
 }
-
+.page {
+    flex: 1;
+    flex-direction: column;
+    min-height: 100vh;  /* Ensure the container takes the full viewport height */
+}
 .slider:before {
     position: absolute;
     content: "";
@@ -133,6 +151,9 @@ input[type=number] {
 }
 .slider-off.slider:before {
     left: 3px;
+}
+html, body {
+    background-color: #ccc;
 }
 .slider-on.slider:before {
     left: -5px;
@@ -173,4 +194,7 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+tbody tr:hover {
+    background-color: #f0f0f0;
 }

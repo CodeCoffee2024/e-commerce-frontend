@@ -37,6 +37,9 @@ import { DropdownFormAddress2Component } from './shared/dropdown-form-address2/d
 import { AddShippingAddressFormComponent } from './add-shipping-address/add-shipping-address-form/add-shipping-address-form.component';
 import { ListShippingAddressComponent } from './shipping-address/list-shipping-address/list-shipping-address.component';
 import { AddShippingAddressModalComponent } from './add-shipping-address/add-shipping-address-modal/add-shipping-address-modal.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { PaginationComponent } from './shared/pagination/pagination.component';
+import { SharedModule } from './shared/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -68,7 +71,8 @@ import { AddShippingAddressModalComponent } from './add-shipping-address/add-shi
     DropdownFormAddress2Component,
     AddShippingAddressFormComponent,
     ListShippingAddressComponent,
-    AddShippingAddressModalComponent
+    AddShippingAddressModalComponent,
+    MyOrdersComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +82,7 @@ import { AddShippingAddressModalComponent } from './add-shipping-address/add-shi
     FormsModule,
     AppRoutingModule,
     NgbModalModule,
-
+    SharedModule,
     AngularFireModule.initializeApp(firebaseConfig),
   ],
   entryComponents: [DockElementComponent],  // add to entryComponents for modals

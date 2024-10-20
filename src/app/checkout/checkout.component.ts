@@ -62,7 +62,6 @@ export class CheckoutComponent implements OnInit{
       let param = {id: localStorage.getItem('selectedAddress')}
       this.addressService.getAddress(param).subscribe({
         next: (data : any) => {
-          console.log(data);
           if (data?.data) {
             this.defaultAddress = this.defaultAddress.format(data?.data as AddressForm);
           }
@@ -75,7 +74,6 @@ export class CheckoutComponent implements OnInit{
       this.addressService.defaultDeliveryAddress.subscribe({
         next: (data : any) => {
           if (data?.data) {
-            console.log(data);
             this.defaultAddress = this.defaultAddress.format(data?.data as AddressForm);
             localStorage.setItem('selectedAddress', this.defaultAddress.id.toString());
           }

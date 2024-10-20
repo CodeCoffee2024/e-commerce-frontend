@@ -1,0 +1,39 @@
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" [class.collapsed]="isCollapsed">
+        <div class="sidebar-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 *ngIf="!isCollapsed">Logo here</h2>
+                        <h2 *ngIf="isCollapsed">Lo</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="nav-list">
+            <li *ngFor="let item of navItems" class="pt-3 pb-1">
+                <a [href]="item.link">
+                    <div class="container p-0">
+                        <div class="row">
+                            <div [class]="isCollapsed ? 'col-12 d-flex justify-content-center' :'col-2'">
+                                <span class="font-md" [class]="isCollapsed ? 'm-0' :''"><i [class]="'fa fa-xs ' + item.icon"></i></span>
+                            </div>
+                            <div class="col-10 pl-0 nav-item" [class]="showLabels ? 'toggled' : 'untoggled'">
+                                <span class="font-md" *ngIf="showLabels">{{ item.label }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        </div>
+        <div class="toggler" (click)="toggleSidebar()" [class]="!isCollapsed ? 'toggler-collapsed' : 'toggler-uncollapsed'">
+            <span><i [class]="isCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-left'"></i></span>
+        </div>
+    
+        <div class="main-content">
+            
+            <router-outlet></router-outlet>
+        </div>
+    </div>

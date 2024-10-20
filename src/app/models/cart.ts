@@ -9,4 +9,5 @@ export interface Cart {
     datetime: Date;
     quantity: Number;
     quantity2: Number;
+    total: Number;
 }

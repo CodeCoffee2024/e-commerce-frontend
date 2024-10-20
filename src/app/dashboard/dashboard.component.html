@@ -1,4 +1,4 @@
-<div class="col-12">
+<div class="col-12 bg-white page">
     <app-header></app-header>
     <div class="row mt-3">
         <div class="col-md-8 col-12">
@@ -81,7 +81,7 @@
             <span class="font-md">Categories</span>
         </div>
     </div>
-    <div class="row mt-2 mb-4" *ngIf="!isLoadingCategories">
+    <div class="row mt-2 mb-4 pb-3" *ngIf="!isLoadingCategories">
         <div class="col-6 col-md-12-5" *ngFor="let category of categories">
             <div>
                 <img [src]="dashboardService.publicUrl + category.imgPath" class="p-2" width="100%" height="100%">

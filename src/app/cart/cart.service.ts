@@ -11,12 +11,15 @@ import { ApiService } from '../api.service';
 })
 export class CartService extends ApiService {
   private cartItemsSubject = new BehaviorSubject<Cart[]>([]);
-  isLoading = false;
+  private isLoadingSubject = new BehaviorSubject<boolean>(false);
+  isLoading$ = this.isLoadingSubject.asObservable();
   cartItems$ = this.cartItemsSubject.asObservable();
+  private setLoading(value: boolean) {
+    this.isLoadingSubject.next(value);
+  }
 
   addItem(product: any, quantity: Number, isSelected = false) {
     const currentItems = this.cartItemsSubject.value;
-    console.log(currentItems);
     let isExisting = currentItems.find(it => it.product.id == product.id);
     if (isExisting) {
       quantity = Number(currentItems.find(it => it.product.id == product.id).quantity) + Number(quantity);
@@ -30,7 +33,7 @@ export class CartService extends ApiService {
     this.postRequest('cart/createOrUpdateCartItem', payload).subscribe(updatedCart=> {
       const cartItems = JSON.parse(updatedCart["cart"] as string);
       this.cartItemsSubject.next(cartItems as Cart[]);
-      console.log(currentItems);
+
     });
 
   }
@@ -81,6 +84,7 @@ export class CartService extends ApiService {
     let payload = {
       'content': JSON.stringify(cart)
     }
+    this.setLoading(true); // Set loading to true before the request starts
     localStorage.setItem('cart', JSON.stringify(cart));
     this.setAuthentication(localStorage.getItem('token'));
     this.patchRequest('cart/updateCart', payload).subscribe({
@@ -99,6 +103,7 @@ export class CartService extends ApiService {
         }
       },
       complete: () => {
+        this.setLoading(false); // Set loading to true before the request starts
       }
     });
   }
@@ -141,7 +146,6 @@ export class CartService extends ApiService {
   }
   updateCartItem(cartItem: Cart) {
     const currentItems = this.cartItemsSubject.value;
-    console.log(currentItems);
     let itemToUpdate = currentItems.find((item: any) => item.product.id === cartItem.product.id);
     if (itemToUpdate) {
       itemToUpdate.quantity = cartItem.quantity;
@@ -154,20 +158,15 @@ export class CartService extends ApiService {
   }
   async getCart(): Promise<any> {
     this.setAuthentication(localStorage.getItem('token'));
-    this.isLoading = true;
+    this.setLoading(true);
     return this.getRequest('cart').subscribe({
       next: (updatedCart)=> {
         const cartItems = JSON.parse(updatedCart as string);
         this.cartItemsSubject.next(cartItems as Cart[]);
-      },error:() => {
-        this.isLoading = false;
       }, complete: () => {
-        this.isLoading = false;
+        this.setLoading(false);
       }
     });
-  }
-  hasLoading() {
-    return this.isLoading;
   }
   loadCart(data) {
     if(data?.user?.cart) {

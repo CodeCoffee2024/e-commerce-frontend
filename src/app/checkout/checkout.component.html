@@ -1,6 +1,6 @@
 
 
-<div class="col-12">
+<div class="col-12 page bg-white">
     <app-header></app-header>
     <div class="row mt-3" *ngIf="isMobile">
         <div class="col-12 d-flex align-items-center justify-content-center">
@@ -70,7 +70,7 @@
             <div class="row">
                 <div class="col-12">
                     <div *ngIf="!isMobile">
-                        <div (click)="updatePaymentOption(PaymentOption.CashOnDelivery)" class="cursor-pointer border border-rounded border-info container d-flex flex-column justify-content-between">
+                        <div (click)="updatePaymentOption(PaymentOption.CashOnDelivery)" [ngClass]="selectedPaymentOption == PaymentOption.CashOnDelivery ? 'border-info': 'border-dark'" class="cursor-pointer border border-rounded container d-flex flex-column justify-content-between">
                             <div class="row mb-5">
                                 <div class="col-11">
                                     <i class="fa font-md mr-2 fa-money"></i>
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="isMobile" class="payment-option border border-rounded border-info container d-flex flex-column justify-content-between">
+                    <div *ngIf="isMobile" (click)="updatePaymentOption(PaymentOption.CashOnDelivery)" [ngClass]="selectedPaymentOption == PaymentOption.CashOnDelivery ? 'border-info': 'border-dark'" class="payment-option border border-rounded container d-flex flex-column justify-content-between">
                         <div class="row mb-5">
                             <div class="col-4 primary-highlight-text-color pr-1">
                                 <i class="fa fa-money"></i>
