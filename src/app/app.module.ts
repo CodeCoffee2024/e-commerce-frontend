@@ -40,6 +40,8 @@ import { AddShippingAddressModalComponent } from './add-shipping-address/add-shi
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { PaginationComponent } from './shared/pagination/pagination.component';
 import { SharedModule } from './shared/shared/shared.module';
+import { StatusLabelsComponent } from './shared/status-labels/status-labels.component';
+import { ThArrowComponent } from './shared/th-arrow/th-arrow.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,6 @@ import { SharedModule } from './shared/shared/shared.module';
     ShippingAddressComponent,
     MobileShippingAddressComponent,
     AddShippingAddressComponent,
-    DropdownFormComponent,
     UpdateShippingAddressComponent,
     Page404Component,
     ConfirmationDialogComponent,

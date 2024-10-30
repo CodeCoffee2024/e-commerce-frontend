@@ -1,4 +1,4 @@
-    <div class="dashboard-container">
+    <div class="dashboard-container" *ngIf="!invalidView">
         <!-- Sidebar -->
         <div class="sidebar" [class.collapsed]="isCollapsed">
         <div class="sidebar-header">
@@ -32,8 +32,19 @@
             <span><i [class]="isCollapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-left'"></i></span>
         </div>
     
-        <div class="main-content">
-            
+        <div class="main-content page-admin">
             <router-outlet></router-outlet>
+        </div>
+    </div>
+    <div class="container bg-white h-100vh d-flex align-items-center" *ngIf="invalidView">
+        <div class="row mt-2 mb-2">
+            <div class="col-12 ">
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="assets/403.png" width="100%">
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <h3>Sorry, the page you're trying to access is forbidden</h3>
+                </div>
+            </div>
         </div>
     </div>

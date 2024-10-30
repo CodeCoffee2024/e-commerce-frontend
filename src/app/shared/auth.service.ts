@@ -26,9 +26,10 @@ export class AuthService extends ApiService {
     localStorage.removeItem('token');
     return this.afAuth.signOut();
   }
-  verifyAuth() {
-    const token = JSON.parse(localStorage.getItem('auth'))?.user?.token;
-    if (token) {
+  verifyAuth(isAdmin = false) {
+    const user = JSON.parse(localStorage.getItem('auth'))?.user;
+    const token = user?.token;
+    if (token && user?.isAdmin == isAdmin) {
       this.setAuthentication(token);
       this.getRequest('user/checkAccess').subscribe({
         next:it => {
@@ -40,8 +41,9 @@ export class AuthService extends ApiService {
           window.location.reload();
         }
       });
+      return localStorage.getItem('auth');
     }
-    return localStorage.getItem('auth');
+    return false;
   }
   // Observable to get the latest display name
   get displayName$() {
@@ -75,11 +77,15 @@ export class AuthService extends ApiService {
     return localStorage.getItem('displayName');
   }
   setAuth(data: any) {
+    console.log(data);
     localStorage.setItem('auth', JSON.stringify(data));
     localStorage.setItem('token', data?.user?.token);
   }
   logInDefault(payload) {
     return this.postRequest('user/login', payload);
+  }
+  logInAdmin(payload) {
+    return this.postRequest('user/login-admin', payload);
   }
   registerGoogleUser(payload) {
     return this.postRequest('user/create', payload);

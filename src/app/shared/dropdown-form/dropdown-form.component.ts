@@ -12,6 +12,7 @@ export class DropdownFormComponent implements OnInit, OnChanges {
   @Input() label: string = '';
   @Input() field: string = '';
   @Input() error: any;
+  @Input() clearAfterSelect: boolean = false;
   @Input() disabled: boolean = false;
   @Input() labelClass: string = '';
   @Output() formModelChange = new EventEmitter<any>(); // Emit the selected value to the parent
@@ -69,5 +70,6 @@ export class DropdownFormComponent implements OnInit, OnChanges {
     // this.selectionChanged.emit(item); 
     this.filteredData = [];
     this.searchText = item[this.field];
+    this.searchText = this.clearAfterSelect ? null: this.searchText;
   }
 }

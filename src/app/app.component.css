@@ -6,12 +6,21 @@
 html {
     background-color: #f5f5f5;
 }
-.page-admin {
-  min-height: 73vh;
-  max-height: 73vh;
+.bg-plain {
+    background-color: #ccc;
 }
-.page-admin table {
-  max-height: 60vh;
+.h-100vh {
+    height: 100vh;
+}
+.height-main-container {
+  min-height: 55vh;
+  max-height: 55vh;
+}
+.height-main-container-show-page {
+    min-height: 77vh;
+}
+.height-main-container table {
+  max-height: 43vh;
 }
 .admin-loading {
     display: flex;              /* Use Flexbox */
@@ -197,4 +206,11 @@ input:checked + .slider:before {
 }
 tbody tr:hover {
     background-color: #f0f0f0;
+}
+thead tr th {
+    position: sticky !important;
+    top: 0;
+    background-color: white; /* Ensure the header stays visible */
+    z-index: 1; /* Ensure it stays above the body rows */
+    border-bottom: 2px solid #dee2e6; /* Add a border for better visibility */
 }

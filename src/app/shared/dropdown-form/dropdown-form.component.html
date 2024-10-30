@@ -1,6 +1,5 @@
 <div class="dropdown">
-    <!-- Label for the input -->
-    <label [class]="labelClass">{{ label }}</label>
+    <label [class]="labelClass" class="font-weight-bold">{{ label }}</label>
     <input type="text" class="form-control" [class]="error ? 'border-danger': ''" [disabled]="disabled" placeholder="Enter {{ label }}" [(ngModel)]="searchText" (ngModelChange)="onSearchTextChanged()">
   
     <ul class="list-group mt-2 position-absolute w-100" *ngIf="filteredData.length">

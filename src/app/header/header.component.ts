@@ -26,16 +26,17 @@ export class HeaderComponent implements OnInit {
   ){
   }
   async ngOnInit() {
-    await this.cartService.getCart().then(as=>{
-    });
-    this.cartService.cartItems$.subscribe(() => {
-      this.totalItems = this.cartService.getTotalCountItems() > 99 ? "99+" : this.cartService.getTotalCountItems().toString();
-    });
-    this.authService.verifyAuth();
-    this.authService.displayName$.subscribe(displayName => {
-      this.displayName = displayName;
-    });
-    this.displayName = this.displayName.length > 0 ? this.displayName : this.authService.displayName;
+    if (this.authService.verifyAuth()) {
+      await this.cartService.getCart().then(as=>{
+      });
+      this.cartService.cartItems$.subscribe(() => {
+        this.totalItems = this.cartService.getTotalCountItems() > 99 ? "99+" : this.cartService.getTotalCountItems().toString();
+      });
+      this.authService.displayName$.subscribe(displayName => {
+        this.displayName = displayName;
+      });
+      this.displayName = this.displayName.length > 0 ? this.displayName : this.authService.displayName;
+    }
   }
   goToCart() {
     this.route.navigate(['cart'])

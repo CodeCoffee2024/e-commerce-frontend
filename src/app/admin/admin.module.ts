@@ -7,18 +7,23 @@ import { AdminDashboardComponent } from './dashboard/dashboard.component';
 import { OrderComponent } from './order/order.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared/shared.module';
+import { ShowOrderComponent } from './order/show-order/show-order.component';
+import { AdminLoginComponent } from './login/login.component';
+import { UpdateOrderItemStatusComponent } from './order/show-order/update-order-item-status/update-order-item-status.component';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
     AdminDashboardComponent,
-    OrderComponent
+    OrderComponent,
+    ShowOrderComponent,
+    AdminLoginComponent,
+    UpdateOrderItemStatusComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    FormsModule,
     SharedModule,
   ]
 })

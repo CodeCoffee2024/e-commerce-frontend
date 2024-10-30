@@ -10,6 +10,5 @@ export class MyOrdersService  extends ApiService {
     this.setAuthentication(localStorage.getItem('token'));
     this.setParameters(params, true);
     return this.getRequest('order/my-orders');
-
   }
 }

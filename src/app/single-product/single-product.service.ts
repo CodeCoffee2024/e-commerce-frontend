@@ -6,7 +6,7 @@ import { ApiService } from '../api.service';
 })
 export class SingleProductService extends ApiService {
   getProduct(id: Number, location = null) {
-    let request = this.getRequest('product/'+id+'/'+location);
+    let request = this.getRequest('product/'+id+'/'+(location ?? 0));
     return request;
   }
 }

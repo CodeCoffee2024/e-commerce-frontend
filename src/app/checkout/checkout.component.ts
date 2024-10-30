@@ -184,10 +184,14 @@ export class CheckoutComponent implements OnInit{
       shippingAddress: this.defaultAddress
     }
     this.checkoutForm.format(data);
-    console.log(this.checkoutForm);
     this.checkoutService.checkout(this.checkoutForm).subscribe({
       next: (result: any) => {
-        
+        this.router.navigate(['my-orders']);
+        this.notificationService.openModal({
+          type: NotificationType.ORDERCREATED,
+          message: "Thank you for your purchase",
+          header: null,
+          timer: 3000})
       }, complete: () => {
         this.loadingService.hide();
       }

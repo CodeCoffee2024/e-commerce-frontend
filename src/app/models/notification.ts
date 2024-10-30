@@ -8,5 +8,7 @@ export enum NotificationType {
     AUTHERROR,
     SUCCESSLOGIN,
     ADDADDRESS,
+    STATUSCHANGE,
+    ORDERCREATED,
     REMOVEADDRESS
 }

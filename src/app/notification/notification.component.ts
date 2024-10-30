@@ -34,6 +34,12 @@ export class NotificationComponent implements OnInit {
       case NotificationType.REMOVEADDRESS:
         return 'fa-map text-success'
       break;
+      case NotificationType.STATUSCHANGE:
+        return 'fa-check text-success'
+      break;
+      case NotificationType.ORDERCREATED:
+        return 'fa-shopping-cart text-success'
+      break;
       default:
         return 'fa-question-mark text-success';
       

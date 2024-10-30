@@ -18,3 +18,7 @@ export class CityMunicipalityDTO {
         return cityMunicipalityMapper.map(data);
     }
 }
+export class CityMunicipalityFragment {
+    id: Number;
+    description: string;
+}

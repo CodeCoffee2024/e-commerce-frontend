@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OrderStatusType } from '../models/orderStatusType';
+import { OrderStatusType, OrderStatusTypeLabels } from '../models/orderStatusType';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { Router } from '@angular/router';
 import { AddressService } from '../shared/address.service';
@@ -9,8 +9,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationService } from '../notification/notification.service';
 import { CheckoutService } from '../checkout/checkout.service';
 import { MyOrdersService } from './my-orders.service';
-import { Order, OrderDTO } from '../models/order';
+import { Order, OrderDTO, OrderItemDTO } from '../models/order';
 import { Merchant } from '../models/merchant';
+import { AdminOrderService } from '../admin/order/admin-order.service';
 
 @Component({
   selector: 'app-my-orders',
@@ -21,8 +22,10 @@ export class MyOrdersComponent {
   searchText: string;
   selectedStatus: OrderStatusType = OrderStatusType.ALL;
   OrderStatusType = OrderStatusType;
+  OrderStatusTypeLabels = OrderStatusTypeLabels;
   isLoading = true;
   order: OrderDTO = new OrderDTO();
+  orders: OrderDTO[] = [];
   ordermapper: OrderDTO = new OrderDTO();
   constructor(
     public dashboardService: DashboardService,
@@ -33,7 +36,7 @@ export class MyOrdersComponent {
     private modalService: NgbModal,
     private notificationService: NotificationService,
     private orderService: MyOrdersService,
-    private checkoutService: CheckoutService
+    private adminOrderService: AdminOrderService
   ){}
   ngOnInit(): void {
     this.isLoading = true;
@@ -45,14 +48,14 @@ export class MyOrdersComponent {
     }
     this.loadOrders()
   }
-  get cartContent() {
-      return this.order?.cart;
+  cartContent(order: OrderDTO) {
+      return order.items;
   }
-  get merchants() {
-    if (!this.cartContent) {
+  merchants(order: OrderDTO) {
+    if (!this.cartContent(order)) {
       return  [];
     }
-    const merchants = this.cartContent.map(it => it).sort((a,b)=> new Date(a.datetime).getTime() - new Date(b.datetime).getTime())
+    const merchants = this.cartContent(order).map(it => it).sort((a,b)=> a.id.valueOf() - b.id.valueOf())
     .map(item => item.product.merchant) // Assuming product has a merchant field
     .filter((merchant, index, self) => self.findIndex(m => m.id === merchant.id) === index); // Remove duplicates based on merchant id
 
@@ -62,21 +65,29 @@ export class MyOrdersComponent {
     let params = {status: orderStatus}
     this.orderService.myOrders(params).subscribe({
       next: (result: any) => {
-        this.order = this.ordermapper.orderMapper(result?.data)[0];
+        this.orders = this.ordermapper.ordersMapper(result?.data);
       }, complete: ()=>{
         this.isLoading = false;
         this.loadingService.hide();
       }
     })
   }
-  merchantItemsTotal(merchant: Merchant) {
-    return this.getItemsOfMerchant(merchant).reduce((runningTotal, item) => {
+  merchantItemsTotal(merchant: Merchant, order: OrderDTO) {
+    return this.getItemsOfMerchant(merchant, order).reduce((runningTotal, item) => {
       runningTotal.total += item.product.price * Number(item.quantity);
       return runningTotal;  // Return the updated runningTotal object
     }, { total: 0 });  // Initialize runningTotal as an object with a 'total' property set to 0
   }
-  getItemsOfMerchant(merchant: Merchant) {
-    const currentItems = this.cartContent;
+  receiveOrder(orderItem: OrderItemDTO) {
+    this.loadingService.show();
+    this.adminOrderService.receiveOrder(orderItem.id).subscribe({
+      next: () => {
+        this.loadOrders(this.selectedStatus);
+      }
+    })
+  }
+  getItemsOfMerchant(merchant: Merchant, order: OrderDTO) {
+    const currentItems = this.cartContent(order);
     return currentItems.filter(it=>it.product.merchant.id == merchant.id);
   }
   get isMobile() {

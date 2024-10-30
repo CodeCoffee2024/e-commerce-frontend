@@ -1,0 +1,76 @@
+<div class="bg-white rounded">
+    <div class="modal-header">
+        <h4>Order # {{order.referenceNumber}} <status-labels [type]="order.status"></status-labels></h4>
+    </div>
+    <div class="modal-body">
+        <div class="container ">
+            <div class="row mt-3">
+                <div class="col-12">
+                    <span class="font-weight-bold font-md">Order Details</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-responsive">
+                        <ng-container *ngFor="let merchant of order.merchants">
+                            <thead>
+                                <tr>
+                                    <td colspan="2">
+                                        <label class="form-label fw-bold text-muted">Merchant</label>
+                                        <div class="d-flex">
+                                            <span class="fs-5">{{ merchant.name }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-right" colspan="2">
+                                        <label class="form-label fw-bold text-muted">Shipping Fee</label>
+                                        <div class="text-right">
+                                            <span class="fs-5 text-right">{{ order.merchantShippingFee(merchant) | number: '1.2-2'}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><input type="checkbox" (change)="toggleAll()" [checked]="toggleCheckbox"></th>
+                                    <th></th>
+                                    <th class="col-10">Product</th>
+                                    <th class="col-2 text-right">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let product of order.getMerchantItems(merchant); let i = index;">
+                                    <td><input type="checkbox" [(ngModel)]="product.isSelected" (change)="toggleItem()"></td>
+                                    <td>{{ i + 1}}</td>
+                                    <td>{{ product.product.productName }}
+                                        <status-labels [type]="OrderStatusTypeLabels[product.status]"></status-labels></td>
+                                    <td class="text-right">{{ product.product.price }}</td>
+                                </tr>
+                            </tbody>
+                        </ng-container>
+                    </table>
+                    <div class="d-flex justify-content-between" *ngIf="order.items.length > 0">
+                        <div><strong class="font-md">Grand Total</strong></div>
+                        <div>
+                            <strong class="font-md primary-highlight-text-color">{{ order.itemStatusTotal() | number: '1.2-2'}}</strong>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="order.items.length == 0">
+                        <div class="col-12 d-flex justify-content-center">
+                            <img src="assets/no-item-display.png" width="300">
+                        </div>
+                        <div class="col-12 pb-3">
+                            <div class="'font-md font-weight-bold d-flex justify-content-center">Your order is empty</div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end">
+                <button type="button" (click)="close()" class="btn btn-secondary mr-2">Close</button>
+                <button type="button" (click)="submit()" class="btn" [class]="order.nextActionClass">{{ order.nextActionLabel }}</button>
+            </div>
+        </div>
+    </div>
+</div>

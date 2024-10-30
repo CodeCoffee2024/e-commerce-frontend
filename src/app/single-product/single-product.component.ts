@@ -52,7 +52,7 @@ export class SingleProductComponent implements OnInit{
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadingService.show();
-    this.singleProductService.getProduct(this.id, JSON.parse(localStorage.getItem('currentCityMunicipality')).id).subscribe(product => {
+    this.singleProductService.getProduct(this.id, JSON.parse(localStorage.getItem('currentCityMunicipality'))?.id).subscribe(product => {
       let productMapper = new Mapper<Product, Product>((product: Product): Product => {
         return product;
       })

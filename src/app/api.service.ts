@@ -49,6 +49,9 @@ export class ApiService {
   patchRequest(endPoint:string, payload: any) {
     return this.httpClient.patch(environmentLocal.apiUrl+endPoint,JSON.stringify(payload), {headers: this.headers, params: this.params});
   }
+  putRequest(endPoint:string, payload: any) {
+    return this.httpClient.put(environmentLocal.apiUrl+endPoint,JSON.stringify(payload), {headers: this.headers, params: this.params});
+  }
 
   getRequest(endPoint:string) {
     return this.httpClient.get(environmentLocal.apiUrl+endPoint+(this.queryParams ? '?'+this.queryParams:''), {headers: this.headers, params: this.params});
